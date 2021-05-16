@@ -49,11 +49,12 @@ public class PharmacistController {
 	}
 	
 	@GetMapping("pharmacists/{id}")
-	private PharmacistDTO getPharmacistById(@PathVariable Integer id){
+	private ResponseEntity<PharmacistDTO> getPharmacistById(@PathVariable Integer id){
 		//return this.pharmacistRepository.findById(id);
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		//mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		Pharmacist pharmacist = this.pharmacistService.getPharmacistById(id);
-		return mapper.map(pharmacist, PharmacistDTO.class);
+		PharmacistDTO dto = mapper.map(pharmacist, PharmacistDTO.class);
+		return new ResponseEntity<PharmacistDTO>(dto, HttpStatus.OK);
 	}
 	
 	@PutMapping("pharmacists/{id}")

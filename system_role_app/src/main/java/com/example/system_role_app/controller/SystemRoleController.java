@@ -35,7 +35,7 @@ public class SystemRoleController {
 	private ModelMapper mapper;
 	
 	@GetMapping("system-roles")
-	private Collection<SystemRoleDTO> getSystemRoles(@RequestParam(required = false) String name){
+	private ResponseEntity<Collection<SystemRoleDTO>> getSystemRoles(@RequestParam(required = false) String name){
 		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		Collection<SystemRoleDTO> collection = new ArrayList<SystemRoleDTO>();
 		if(name!= null && !name.isEmpty()) {
@@ -47,13 +47,14 @@ public class SystemRoleController {
 				collection.add(mapper.map(role, SystemRoleDTO.class));
 			}
 		}
-		return collection;
+		return new ResponseEntity<>(collection, HttpStatus.OK);
 	}
 	
 	@GetMapping("system-roles/{id}")
-	private SystemRoleDTO getSystemRoleById(@PathVariable Integer id){
+	private ResponseEntity<SystemRoleDTO> getSystemRoleById(@PathVariable Integer id){
 		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		return mapper.map(systemRoleRepository.findById(id).get(), SystemRoleDTO.class);
+		SystemRoleDTO role = mapper.map(systemRoleRepository.findById(id).get(), SystemRoleDTO.class);
+		return new ResponseEntity<SystemRoleDTO>(role, HttpStatus.OK);
 	}
 	
 	@PostMapping("system-roles")
