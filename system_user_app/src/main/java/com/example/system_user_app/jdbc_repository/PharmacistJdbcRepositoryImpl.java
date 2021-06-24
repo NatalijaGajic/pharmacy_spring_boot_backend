@@ -87,7 +87,6 @@ public class PharmacistJdbcRepositoryImpl implements PharmacistJdbcRepository {
 
 	@Override
 	public Collection<Pharmacist> findAllActivePharmacists() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -99,8 +98,22 @@ public class PharmacistJdbcRepositoryImpl implements PharmacistJdbcRepository {
 
 	@Override
 	public Collection<Pharmacist> findByUsernameContainingIgnoreCase(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		String query = "select * from system_user where user_type='pharmacist' and username like '%"+username+"'";
+		return jdbcTemplate.query(query, (rs, rowNum) ->
+        new Pharmacist(
+                rs.getString("first_name"),
+                rs.getString("last_name"),
+                rs.getString("password"),
+                rs.getString("telephone"),
+                rs.getString("username"),
+                rs.getString("email"),
+                rs.getInt("system_role_id"),
+                rs.getDate("date_of_birth"),
+                rs.getInt("id"),
+                rs.getDouble("salary"),
+                rs.getDate("start_date_of_contract"),
+                rs.getDate("end_date_of_contract")
+        ));
 	}
 
 	//TODO: cascade delete

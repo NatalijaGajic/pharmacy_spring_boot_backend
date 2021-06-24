@@ -5,8 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.example.system_user_app.dto.PharmacistDTO;
+import com.example.system_user_app.exceptions.InvalidIdException;
 import com.example.system_user_app.jdbc_repository.PharmacistJdbcRepository;
 import com.example.system_user_app.model.Pharmacist;
 import com.example.system_user_app.model.SystemRole;
@@ -22,28 +21,33 @@ public class PharmacistServiceImpl implements PharmacistService{
 	private SystemRoleService systemRoleService;
  
 	@Override
-	public Pharmacist getPharmacistById(Integer id) {
+	public Pharmacist getPharmacistById(Integer id) throws Exception{
 		Pharmacist pharmacist = this.pharmacistRepository.findById(id);
 		SystemRole role = systemRoleService.getRoleById(pharmacist.getSystemRole().getId());
 		if(role != null) {
 			pharmacist.setSystemRole(role);
 		}
 		else {
-			//throw conflict
+			throw new InvalidIdException("Invalid role id");
 		}
 		return pharmacist;
 	}
 
 	@Override
-	public Collection<Pharmacist> getPharmacists() {
-		Collection<Pharmacist> pharmacists = this.pharmacistRepository.findAll();
+	public Collection<Pharmacist> getPharmacists(String username) throws Exception {
+		Collection<Pharmacist> pharmacists;
+		if(username!= null && !username.isEmpty()) {
+			pharmacists = this.pharmacistRepository.findByUsernameContainingIgnoreCase(username);
+		}else {
+			pharmacists = this.pharmacistRepository.findAll();
+		}
 		for(Pharmacist pharmacist: pharmacists) {
 			SystemRole role = systemRoleService.getRoleById(pharmacist.getSystemRole().getId());
 			if(role != null) {
 				pharmacist.setSystemRole(role);
 			}
 			else {
-				//throw conflict
+				throw new InvalidIdException("Invalid role id");
 			}
 		}
 		return pharmacists;

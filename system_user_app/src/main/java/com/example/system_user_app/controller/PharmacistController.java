@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.system_user_app.dto.PharmacistCreationDTO;
 import com.example.system_user_app.dto.PharmacistDTO;
 import com.example.system_user_app.dto.PharmacistUpdateDTO;
+import com.example.system_user_app.exceptions.InvalidIdException;
 import com.example.system_user_app.jdbc_repository.PharmacistJdbcRepository;
 import com.example.system_user_app.model.Pharmacist;
 import com.example.system_user_app.model.SystemRole;
@@ -37,50 +39,74 @@ public class PharmacistController {
 	private PharmacistService pharmacistService;
 	
 	@GetMapping("pharmacists")
-	private Collection<PharmacistDTO> getAllPharmacists(){
-		//return this.pharmacistRepository.findAll();
-		//mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		Collection<Pharmacist> pharmacists = this.pharmacistService.getPharmacists();
-		Collection<PharmacistDTO> collection = new ArrayList<PharmacistDTO>();
-		for(Pharmacist pharmacist: pharmacists) {
-			collection.add(mapper.map(pharmacist, PharmacistDTO.class));
+	private ResponseEntity<?> getAllPharmacists(@RequestParam(required = false) String username){
+		try {
+			Collection<Pharmacist> pharmacists = this.pharmacistService.getPharmacists(username);
+			Collection<PharmacistDTO> collection = new ArrayList<PharmacistDTO>();
+			for(Pharmacist pharmacist: pharmacists) {
+				collection.add(mapper.map(pharmacist, PharmacistDTO.class));
+			}
+			return new ResponseEntity<Collection<PharmacistDTO>>(collection, HttpStatus.OK);
+		} catch (Exception e) {
+			if(e.getClass().equals(InvalidIdException.class)) {
+				return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			}
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
-		return collection;
 	}
 	
 	@GetMapping("pharmacists/{id}")
-	private ResponseEntity<PharmacistDTO> getPharmacistById(@PathVariable Integer id){
-		//return this.pharmacistRepository.findById(id);
-		//mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		Pharmacist pharmacist = this.pharmacistService.getPharmacistById(id);
-		PharmacistDTO dto = mapper.map(pharmacist, PharmacistDTO.class);
-		return new ResponseEntity<PharmacistDTO>(dto, HttpStatus.OK);
+	private ResponseEntity<?> getPharmacistById(@PathVariable Integer id){
+		try {
+			Pharmacist pharmacist = this.pharmacistService.getPharmacistById(id);
+			PharmacistDTO dto = mapper.map(pharmacist, PharmacistDTO.class);
+			return new ResponseEntity<PharmacistDTO>(dto, HttpStatus.OK);
+		} catch (Exception e) {
+			if(e.getClass().equals(InvalidIdException.class)) {
+				return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+			}
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 	
+	//TODO: wrong id for PUT, DELETE, POST
 	@PutMapping("pharmacists/{id}")
 	private ResponseEntity<?> updatePharmacist(@PathVariable Integer id, @RequestBody PharmacistUpdateDTO body){
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		Pharmacist pharmacist = mapper.map(body, Pharmacist.class);
-		pharmacist.setId(id);
-		this.pharmacistRepository.save(pharmacist);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		try {
+			Pharmacist pharmacist = mapper.map(body, Pharmacist.class);
+			pharmacist.setId(id);
+			this.pharmacistRepository.save(pharmacist);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 
 	}
 	
 	@PostMapping("pharmacists")
 	private ResponseEntity<?> updatePharmacist(@RequestBody PharmacistCreationDTO body){
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		Pharmacist pharmacist = mapper.map(body, Pharmacist.class);
-		this.pharmacistRepository.save(pharmacist);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		try {
+			Pharmacist pharmacist = mapper.map(body, Pharmacist.class);
+			pharmacist.getSystemRole().setId(body.getSystemRoleId());;
+			this.pharmacistRepository.save(pharmacist);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 
 	}
 	
 	@DeleteMapping("pharmacists/{id}")
 	private ResponseEntity<?> deletePharmacist(@PathVariable Integer id){
-		Pharmacist pharmacist = this.pharmacistRepository.findById(id);
-		this.pharmacistRepository.delete(pharmacist);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		try {
+			Pharmacist pharmacist = this.pharmacistRepository.findById(id);
+			this.pharmacistRepository.delete(pharmacist);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
+		}
 
 	}
+
 }
