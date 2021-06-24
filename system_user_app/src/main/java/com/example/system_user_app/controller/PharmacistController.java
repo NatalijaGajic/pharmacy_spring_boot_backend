@@ -84,7 +84,7 @@ public class PharmacistController {
 	}
 	
 	@PostMapping("pharmacists")
-	private ResponseEntity<?> updatePharmacist(@RequestBody PharmacistCreationDTO body){
+	private ResponseEntity<?> createPharmacist(@RequestBody PharmacistCreationDTO body){
 		try {
 			Pharmacist pharmacist = mapper.map(body, Pharmacist.class);
 			pharmacist.getSystemRole().setId(body.getSystemRoleId());;

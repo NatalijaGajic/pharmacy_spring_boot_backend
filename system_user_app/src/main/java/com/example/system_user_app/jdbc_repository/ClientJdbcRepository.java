@@ -11,4 +11,5 @@ public interface ClientJdbcRepository {
 	public Client findById(Integer id);
 	public Collection<Client> findAll();
 	public Collection<Client> findByUsernameContainingIgnoreCase(String username);
+	public void delete(Client client);
 }
