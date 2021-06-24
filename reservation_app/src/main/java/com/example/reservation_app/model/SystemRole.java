@@ -1,4 +1,4 @@
-package com.example.system_user_app.model;
+package com.example.reservation_app.model;
 
 public class SystemRole {
 

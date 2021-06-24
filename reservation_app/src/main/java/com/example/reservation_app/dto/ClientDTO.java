@@ -1,9 +1,11 @@
-package com.example.system_user_app.dto;
+package com.example.reservation_app.dto;
 
 import java.util.Date;
 
+import com.example.reservation_app.model.SystemRole;
 
-public class PharmacistDTO {
+
+public class ClientDTO {
 
 	private Integer id;
 	
@@ -21,13 +23,9 @@ public class PharmacistDTO {
 	
 	private Date dateOfBirth;
 	
-	private SystemRoleDTO systemRole;
+	private SystemRole systemRole;
 	
-	private double salary;
-	
-	private Date startDateOfContract;
-
-	private Date endDateOfContract;
+	private Integer numberOfPenalties;
 
 	public Integer getId() {
 		return id;
@@ -93,37 +91,19 @@ public class PharmacistDTO {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public SystemRoleDTO getSystemRole() {
+	public SystemRole getSystemRole() {
 		return systemRole;
 	}
 
-	public void setSystemRole(SystemRoleDTO systemRole) {
+	public void setSystemRole(SystemRole systemRole) {
 		this.systemRole = systemRole;
 	}
 
-	public double getSalary() {
-		return salary;
+	public Integer getNumberOfPenalties() {
+		return numberOfPenalties;
 	}
 
-	public void setSalary(double salary) {
-		this.salary = salary;
+	public void setNumberOfPenalties(Integer numberOfPenalties) {
+		this.numberOfPenalties = numberOfPenalties;
 	}
-
-	public Date getStartDateOfContract() {
-		return startDateOfContract;
-	}
-
-	public void setStartDateOfContract(Date startDateOfContract) {
-		this.startDateOfContract = startDateOfContract;
-	}
-
-	public Date getEndDateOfContract() {
-		return endDateOfContract;
-	}
-
-	public void setEndDateOfContract(Date endDateOfContract) {
-		this.endDateOfContract = endDateOfContract;
-	}
-	
-	
 }

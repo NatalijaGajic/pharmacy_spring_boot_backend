@@ -2,7 +2,6 @@ package com.example.system_user_app.dto;
 
 import java.util.Date;
 
-import com.example.system_user_app.model.SystemRole;
 
 public class ClientCreationDTO {
 	

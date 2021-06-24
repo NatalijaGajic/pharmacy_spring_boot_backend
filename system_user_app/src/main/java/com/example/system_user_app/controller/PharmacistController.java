@@ -23,7 +23,6 @@ import com.example.system_user_app.dto.PharmacistUpdateDTO;
 import com.example.system_user_app.exceptions.InvalidIdException;
 import com.example.system_user_app.jdbc_repository.PharmacistJdbcRepository;
 import com.example.system_user_app.model.Pharmacist;
-import com.example.system_user_app.model.SystemRole;
 import com.example.system_user_app.service.PharmacistService;
 
 @RestController

@@ -2,8 +2,6 @@ package com.example.system_user_app.dto;
 
 import java.util.Date;
 
-import com.example.system_user_app.model.SystemRole;
-
 public class ClientDTO {
 
 	private Integer id;
@@ -22,7 +20,7 @@ public class ClientDTO {
 	
 	private Date dateOfBirth;
 	
-	private SystemRole systemRole;
+	private SystemRoleDTO systemRole;
 	
 	private Integer numberOfPenalties;
 
@@ -90,11 +88,11 @@ public class ClientDTO {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public SystemRole getSystemRole() {
+	public SystemRoleDTO getSystemRole() {
 		return systemRole;
 	}
 
-	public void setSystemRole(SystemRole systemRole) {
+	public void setSystemRole(SystemRoleDTO systemRole) {
 		this.systemRole = systemRole;
 	}
 
