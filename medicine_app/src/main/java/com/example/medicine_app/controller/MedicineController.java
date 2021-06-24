@@ -2,6 +2,7 @@ package com.example.medicine_app.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -14,11 +15,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.medicine_app.dto.MedicineCreationUpdateDto;
 import com.example.medicine_app.dto.MedicineDto;
 import com.example.medicine_app.dto.MedicineIdsDto;
+import com.example.medicine_app.exceptions.InvalidIdException;
 import com.example.medicine_app.jpa.Medicine;
 import com.example.medicine_app.service.MedicineService;
 
@@ -31,18 +34,19 @@ public class MedicineController {
 	private ModelMapper mapper;
 	
 	@GetMapping("medicines")
-	private ResponseEntity getMedicines(){
-		/*
-		 * if(name!= null && !name.isEmpty()) { return
-		 * medicineRepository.findByNameContainingIgnoreCase(name); }else { return
-		 * medicineRepository.findAll(); }
-		 */
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		Collection<MedicineDto> medicineDtoList = new ArrayList<MedicineDto>();
-		for(Medicine medicineEntity: medicineService.findAllMedicines()) {
-			medicineDtoList.add(mapper.map(medicineEntity, MedicineDto.class));
+	private ResponseEntity getMedicines(@RequestParam(required = false) String name){
+
+		try {
+			mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+			Collection<MedicineDto> medicineDtoList = new ArrayList<MedicineDto>();
+			for(Medicine medicineEntity: medicineService.findAllMedicines(name)) {
+				medicineDtoList.add(mapper.map(medicineEntity, MedicineDto.class));
+			}
+			return new ResponseEntity<Collection<MedicineDto>>(medicineDtoList, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
 		}
-		return new ResponseEntity<Collection<MedicineDto>>(medicineDtoList, HttpStatus.OK);
 	}
 	
 	@GetMapping("medicines/{id}")
@@ -51,40 +55,42 @@ public class MedicineController {
 		try {
 			Medicine medicine = medicineService.findMedicineById(id);
 			medicineDto = mapper.map(medicine, MedicineDto.class);
+			return new ResponseEntity<MedicineDto>(medicineDto, HttpStatus.OK);
 		} 
 		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(e.getClass().equals(NoSuchElementException.class)) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+			}
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
-//		if(medicine != null) {
-//			return new ResponseEntity<>(MedicineService.findBymedicine(medicine), HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
-		return new ResponseEntity<MedicineDto>(medicineDto, HttpStatus.OK);
 	}
 	
 	@GetMapping("medicines-from-ids")
-	private ResponseEntity getMedicinesFromIds(@RequestBody MedicineIdsDto medicineIdsDto){
+	private ResponseEntity getMedicinesFromIds(@RequestParam(name="id[]", required=true) String[] idArr){
+		//TODO: fix req params
 		Collection<MedicineDto> medicineDtoList = new ArrayList<MedicineDto>();
 		try {
-			mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-			for(Medicine medicineEntity: medicineService.findMedicinesByIds(medicineIdsDto.getMedicineIds())) {
+			//TODO: bad id
+			Integer[] ids = new Integer[idArr.length];
+			for(int i = 0;i < idArr.length;i++)
+			{
+			   ids[i] = Integer.parseInt(idArr[i]);
+			}
+			for(Medicine medicineEntity: medicineService.findMedicinesByIds(ids)) {
 				medicineDtoList.add(mapper.map(medicineEntity, MedicineDto.class));
 			}
 			return new ResponseEntity<Collection<MedicineDto>>(medicineDtoList, HttpStatus.OK);
 		} 
 		catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ResponseEntity<Collection<MedicineDto>>(medicineDtoList, HttpStatus.OK);
+			if(e.getClass().equals(NoSuchElementException.class)) {
+				//TODO: response body
+				return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage().toString());
 
-//		if(medicine != null) {
-//			return new ResponseEntity<>(MedicineService.findBymedicine(medicine), HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//		}
+			}
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
+		}
 	}
 	
 	@PostMapping("medicines")
@@ -96,7 +102,7 @@ public class MedicineController {
 				return new ResponseEntity(HttpStatus.CREATED);
 			}
 		catch(Exception e){
-			//TODO: check exception type 
+
 			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 		
@@ -105,22 +111,32 @@ public class MedicineController {
 	@PutMapping("medicines/{id}")
 	private ResponseEntity updateMedicine(@PathVariable Integer id, @RequestBody MedicineDto medicineDto) {
 		try {
-			Medicine medicine = mapper.map(medicineDto, Medicine.class);
+			Medicine medicine = medicineService.findMedicineById(id);
+			medicine = mapper.map(medicineDto, Medicine.class);
 			medicine.setId(id);
 			medicineService.updateMedicine(medicine);
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			if(e.getClass().equals(NoSuchElementException.class)) {
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+			}
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
 	@DeleteMapping("medicines/{id}")
 	private ResponseEntity deleteMedicine(@PathVariable Integer id) {
 		try {
+			Medicine medicine = medicineService.findMedicineById(id);
 			medicineService.deleteMedicine(id);
-			return new ResponseEntity<>(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			if(e.getClass().equals(NoSuchElementException.class)) {
+				return new ResponseEntity(HttpStatus.NOT_FOUND);
+
+			}
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	

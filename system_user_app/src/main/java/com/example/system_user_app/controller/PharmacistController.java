@@ -39,7 +39,7 @@ public class PharmacistController {
 	@GetMapping("pharmacists")
 	private Collection<PharmacistDTO> getAllPharmacists(){
 		//return this.pharmacistRepository.findAll();
-		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+		//mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		Collection<Pharmacist> pharmacists = this.pharmacistService.getPharmacists();
 		Collection<PharmacistDTO> collection = new ArrayList<PharmacistDTO>();
 		for(Pharmacist pharmacist: pharmacists) {

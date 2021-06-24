@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.medicine_app.exceptions.InvalidIdException;
 import com.example.medicine_app.jpa.Medicine;
 import com.example.medicine_app.repository.MedicineRepository;
 
@@ -25,7 +26,11 @@ public class MedicineServiceImpl implements MedicineService {
 	}
 
 	@Override
-	public Collection<Medicine> findAllMedicines() {
+	public Collection<Medicine> findAllMedicines(String name) {
+		if(name!= null && !name.isEmpty()) 
+		{ 
+			return medicineRepository.findByNameContainingIgnoreCase(name); 
+		}
 		return medicineRepository.findAll();
 	}
 
@@ -37,16 +42,17 @@ public class MedicineServiceImpl implements MedicineService {
 
 
 	@Override
-	public Collection<Medicine> findMedicinesByIds(Collection<Integer> ids) {
+	public Collection<Medicine> findMedicinesByIds(Integer[] ids) throws Exception {
 		Collection<Medicine> medicines = new ArrayList<Medicine>();
 		for(Integer id: ids) {
-			medicines.add(medicineRepository.getOne(id));
+			Medicine medicine = medicineRepository.findById(id).get();
+			medicines.add(medicine);
 		}
 		return medicines;
 	}
 
 	@Override
-	public Medicine findMedicineById(Integer id) throws Exception {
+	public Medicine findMedicineById(Integer id) {
 		return medicineRepository.findById(id).get();
 	}
 

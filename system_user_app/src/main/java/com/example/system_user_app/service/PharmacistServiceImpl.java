@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.system_user_app.dto.PharmacistDTO;
 import com.example.system_user_app.jdbc_repository.PharmacistJdbcRepository;
 import com.example.system_user_app.model.Pharmacist;
 import com.example.system_user_app.model.SystemRole;
@@ -36,6 +37,15 @@ public class PharmacistServiceImpl implements PharmacistService{
 	@Override
 	public Collection<Pharmacist> getPharmacists() {
 		Collection<Pharmacist> pharmacists = this.pharmacistRepository.findAll();
+		for(Pharmacist pharmacist: pharmacists) {
+			SystemRole role = systemRoleService.getRoleById(pharmacist.getSystemRole().getId());
+			if(role != null) {
+				pharmacist.setSystemRole(role);
+			}
+			else {
+				//throw conflict
+			}
+		}
 		return pharmacists;
 	}
 

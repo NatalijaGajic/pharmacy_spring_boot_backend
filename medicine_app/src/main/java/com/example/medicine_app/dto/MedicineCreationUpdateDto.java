@@ -1,6 +1,16 @@
 package com.example.medicine_app.dto;
 
 public class MedicineCreationUpdateDto {
+
+	private String name;
+	
+	private double price;
+	
+	private String manufacturer;
+	
+	private String description;
+	
+	private Integer quantity;
 	
 	public String getName() {
 		return name;
@@ -42,13 +52,4 @@ public class MedicineCreationUpdateDto {
 		this.quantity = quantity;
 	}
 
-	private String name;
-	
-	private double price;
-	
-	private String manufacturer;
-	
-	private String description;
-	
-	private Integer quantity;
 }

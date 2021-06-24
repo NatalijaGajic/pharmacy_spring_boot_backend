@@ -1,2 +1,3 @@
 system_role_app 8010
 system_user_app 8020
+medicine_app 8030
