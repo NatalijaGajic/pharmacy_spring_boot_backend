@@ -13,5 +13,5 @@ public interface ReservationJdbcRepository {
 	public Reservation findById(Integer id);
 	public Collection<Reservation> findAll();
 	public void delete(Reservation reservation);
-	public Reservation getReservationsForClient(Integer clientId);
+	public Collection<Reservation> getReservationsForClient(Integer clientId);
 }

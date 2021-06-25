@@ -2,6 +2,7 @@ package com.example.reservation_app.controller;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +102,7 @@ public class ReservationController {
 	
 	
 	private Reservation convertReservationCreationDtoToReservation(ReservationCreationDTO reservationCreation) {
-		return new Reservation(reservationCreation.getDateOfReservation(), reservationCreation.getDateOfPickUp(), reservationCreation.isCancelled(), reservationCreation.getStatus(), reservationCreation.getClientId());
+		UUID code = UUID.randomUUID();
+		return new Reservation(reservationCreation.getDateOfReservation(), reservationCreation.getDateOfPickUp(), reservationCreation.isCancelled(), reservationCreation.getStatus(), reservationCreation.getClientId(), code);
 	}
 }

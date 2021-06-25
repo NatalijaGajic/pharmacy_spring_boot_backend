@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.reservation_app.dto.ClientDTO;
 import com.example.reservation_app.dto.ReservationMedicineDto;
 import com.example.reservation_app.model.Reservation;
 
