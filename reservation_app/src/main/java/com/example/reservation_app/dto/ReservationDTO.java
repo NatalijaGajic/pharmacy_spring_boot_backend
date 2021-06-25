@@ -1,20 +1,11 @@
-package com.example.reservation_app.model;
+package com.example.reservation_app.dto;
 
 import java.util.Date;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+public class ReservationDTO {
 
-
-public class Reservation {
-
-	private Integer id;
+private Integer id;
 	
 	private UUID reservationCode;
 	
@@ -28,22 +19,15 @@ public class Reservation {
 	
 	private String status;
 	
-	private Integer clientId;
-	
+	private ClientDTO client;
 
-	public Reservation(Date dateOfReservation, Date dateOfPickUp, boolean isCancelled, String status, Integer clientId) {
-		super();
-		this.dateOfReservation = dateOfReservation;
-		this.dateOfPickUp = dateOfPickUp;
-		this.isCancelled = isCancelled;
-		this.status = status;
-		this.clientId = clientId;
+	public ClientDTO getClient() {
+		return client;
 	}
-	
-	public Reservation() {
-		
+
+	public void setClient(ClientDTO client) {
+		this.client = client;
 	}
-	
 
 	public Integer getId() {
 		return id;
@@ -101,13 +85,6 @@ public class Reservation {
 		this.status = status;
 	}
 
-	public Integer getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(Integer clientId) {
-		this.clientId = clientId;
-	}
 	
 
 }

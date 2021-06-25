@@ -1,6 +1,6 @@
-package com.example.reservation_app.model;
+package com.example.reservation_app.dto;
 
-public class SystemRole {
+public class SystemRoleDTO {
 
 	private Integer id;
 	
