@@ -1,0 +1,9 @@
+
+mvn install:install-file -Dfile=C:\Users\Natalija\Downloads\sts-4.10.0.RELEASE\pharmacy\system_role_app\src\main\java\com\example\system_role_app\dto\SystemRoleDTO-1.0.0.jar -DgroupId=com.example.system_role_app -DartifactId=SystemRoleDTO -Dversion=1.0.0 -Dpackaging=jar
+
+
+<dependency>
+	<groupId>com.example.system_role_app</groupId>
+	<artifactId>SystemRoleDTO</artifactId>
+	<version>1.0.0</version>
+</dependency>

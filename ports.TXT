@@ -1,0 +1,7 @@
+system_role_app 8010
+system_user_app 8020
+medicine_app 8030
+reservation_app 8040
+reservation_medicine_app 8050
+user_alergies_app 8060
+purchase_app 8070
