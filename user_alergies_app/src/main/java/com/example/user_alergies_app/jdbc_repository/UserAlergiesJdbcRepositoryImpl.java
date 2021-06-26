@@ -41,7 +41,9 @@ public class UserAlergiesJdbcRepositoryImpl implements UserAlergiesJdbcRepositor
 
 	@Override
 	public void delete(UserAlergies userAlergies) {
-		// TODO Auto-generated method stub
+		String sql = "DELETE from system_user_alergy_medicines where client_id="+userAlergies.getUserId().toString()+" and alergy_medicines_id="+userAlergies.getUserId().toString();
+		jdbcTemplate.execute(sql);
+
 		
 	}
 

@@ -5,7 +5,8 @@ import java.util.Collection;
 import org.springframework.stereotype.Service;
 
 import com.example.user_alergies_app.dto.MedicineDto;
+import com.example.user_alergies_app.dto.MedicineIdsDto;
 
 public interface MedicineService {
-	public Collection<MedicineDto> getMedicinesByIds(Collection<Integer> ids);
+	public Collection<MedicineDto> getMedicinesByIds(MedicineIdsDto medicineIdsDto);
 }

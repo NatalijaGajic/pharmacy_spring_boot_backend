@@ -28,7 +28,7 @@ public class MedicineServiceImpl implements MedicineService{
 		RestTemplate restTemplate = new RestTemplate();
 		String uri = "http://localhost:8030/medicines-from-ids";
 		MedicineIdsDto md = new MedicineIdsDto();
-		 HttpEntity entity = new HttpEntity<>(medicineIdsDto);
+		HttpEntity entity = new HttpEntity<>(medicineIdsDto);
 		ResponseEntity<MedicineDto[]> responseEntity = restTemplate.exchange(uri,
 		        HttpMethod.POST,
 		        entity,

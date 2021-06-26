@@ -7,11 +7,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.user_alergies_app.dto.MedicineIdsDto;
 import com.example.user_alergies_app.dto.MedicineDto;
 import com.example.user_alergies_app.dto.UserAlergiesDto;
 import com.example.user_alergies_app.jdbc_repository.UserAlergiesJdbcRepository;
 import com.example.user_alergies_app.model.UserAlergies;
 import com.example.user_alergies_app.util.MedicineService;
+import com.example.user_alergies_app.util.MedicineServiceImpl;
 
 @Service
 public class UserAlergiesServiceImpl implements UserAlergiesService{
@@ -37,8 +39,9 @@ public class UserAlergiesServiceImpl implements UserAlergiesService{
 		for (UserAlergies userAlergie:userAlergies) {
 			  ids.add(userAlergie.getMedicineId());
 		}
-		
-		Collection<MedicineDto> medicines = medicineService.getMedicinesByIds(ids);
+		MedicineIdsDto medicineIdsDto = new MedicineIdsDto();
+		medicineIdsDto.setMedicineIds(ids);
+		Collection<MedicineDto> medicines = medicineService.getMedicinesByIds(medicineIdsDto);
 		Collection<UserAlergiesDto> userAlergiesDtos = new ArrayList<UserAlergiesDto>();
 		Integer index = 0;
 		for (MedicineDto med: medicines) {
@@ -51,7 +54,7 @@ public class UserAlergiesServiceImpl implements UserAlergiesService{
 
 	@Override
 	public void delete(UserAlergies userAlergies) {
-		// TODO Auto-generated method stub
+		userAlergiesRepository.delete(userAlergies);
 		
 	}
 
