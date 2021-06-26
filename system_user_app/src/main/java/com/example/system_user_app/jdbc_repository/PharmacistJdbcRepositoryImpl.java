@@ -47,7 +47,7 @@ public class PharmacistJdbcRepositoryImpl implements PharmacistJdbcRepository {
 	@Override
 	public Collection<Pharmacist> findAll() {
 		String query = "select * from system_user where user_type='pharmacist'";
-		return jdbcTemplate.query(query, (rs, rowNum) ->
+		return jdbcTemplate.query(query, (rs, rowNum) -> 
         new Pharmacist(
                 rs.getString("first_name"),
                 rs.getString("last_name"),
