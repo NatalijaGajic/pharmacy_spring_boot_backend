@@ -12,6 +12,6 @@ public interface MedicineService {
 	void deleteMedicine(Integer id);
 	Medicine updateMedicine(Medicine  medicine) throws Exception;
 	Medicine findMedicineById(Integer id);
-	Collection<Medicine> findMedicinesByIds(Integer[] ids) throws Exception;
+	Collection<Medicine> findMedicinesByIds(Collection<Integer> ids) throws Exception;
 	Collection<Medicine> findAllMedicines(String name);
 }
