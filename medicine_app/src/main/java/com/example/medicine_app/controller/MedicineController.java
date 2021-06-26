@@ -66,18 +66,12 @@ public class MedicineController {
 		}
 	}
 	
-	@GetMapping("medicines-from-ids")
-	private ResponseEntity getMedicinesFromIds(@RequestParam(name="id[]", required=true) String[] idArr){
-		//TODO: fix req params
+	@PostMapping("medicines-from-ids")
+	private ResponseEntity getMedicinesFromIds(@RequestBody MedicineIdsDto medicineIdsDto){
 		Collection<MedicineDto> medicineDtoList = new ArrayList<MedicineDto>();
 		try {
-			//TODO: bad id
-			Integer[] ids = new Integer[idArr.length];
-			for(int i = 0;i < idArr.length;i++)
-			{
-			   ids[i] = Integer.parseInt(idArr[i]);
-			}
-			for(Medicine medicineEntity: medicineService.findMedicinesByIds(ids)) {
+			mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+			for(Medicine medicineEntity: medicineService.findMedicinesByIds(medicineIdsDto.getMedicineIds())) {
 				medicineDtoList.add(mapper.map(medicineEntity, MedicineDto.class));
 			}
 			return new ResponseEntity<Collection<MedicineDto>>(medicineDtoList, HttpStatus.OK);

@@ -39,10 +39,8 @@ public class MedicineServiceImpl implements MedicineService {
 		return medicineRepository.save(medicine);
 	}
 
-
-
 	@Override
-	public Collection<Medicine> findMedicinesByIds(Integer[] ids) throws Exception {
+	public Collection<Medicine> findMedicinesByIds(Collection<Integer> ids) throws Exception {
 		Collection<Medicine> medicines = new ArrayList<Medicine>();
 		for(Integer id: ids) {
 			Medicine medicine = medicineRepository.findById(id).get();

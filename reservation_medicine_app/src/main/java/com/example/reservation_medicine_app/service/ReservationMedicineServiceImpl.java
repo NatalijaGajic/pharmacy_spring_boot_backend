@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.reservation_medicine_app.dto.MedicineDto;
+import com.example.reservation_medicine_app.dto.MedicineIdsDto;
 import com.example.reservation_medicine_app.dto.ReservationMedicineDto;
 import com.example.reservation_medicine_app.jdbc_repository.ReservationMedicineJdbcRepository;
 import com.example.reservation_medicine_app.model.ReservationMedicine;
@@ -30,7 +31,9 @@ public class ReservationMedicineServiceImpl implements ReservationMedicineServic
 		for (ReservationMedicine rm:reservationMedicines) {
 			  ids.add(rm.getMedicineId());
 			}
-		Collection<MedicineDto> medicines = medicineService.getMedicinesByIds(ids);
+		MedicineIdsDto medicineIdsDto = new MedicineIdsDto();
+		medicineIdsDto.setMedicineIds(ids);
+		Collection<MedicineDto> medicines = medicineService.getMedicinesByIds(medicineIdsDto);
 		Collection<ReservationMedicineDto> reservationMedicineDtos = new ArrayList<ReservationMedicineDto>();
 		Integer index = 0;
 		for (MedicineDto med: medicines) {
