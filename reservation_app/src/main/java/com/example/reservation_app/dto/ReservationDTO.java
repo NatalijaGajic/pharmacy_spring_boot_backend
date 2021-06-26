@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class ReservationDTO {
 
-private Integer id;
+	private Integer id;
 	
 	private UUID reservationCode;
 	
@@ -20,6 +20,20 @@ private Integer id;
 	private String status;
 	
 	private ClientDTO client;
+	
+	
+
+	public ReservationDTO(Integer id, UUID reservationCode, Date dateOfReservation, Date dateOfPickUp, double price,
+			boolean isCancelled, String status) {
+		super();
+		this.id = id;
+		this.reservationCode = reservationCode;
+		this.dateOfReservation = dateOfReservation;
+		this.dateOfPickUp = dateOfPickUp;
+		this.price = price;
+		this.isCancelled = isCancelled;
+		this.status = status;
+	}
 
 	public ClientDTO getClient() {
 		return client;

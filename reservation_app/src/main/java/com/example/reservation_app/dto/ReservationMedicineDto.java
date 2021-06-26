@@ -1,33 +1,30 @@
 package com.example.reservation_app.dto;
 
+
+
 public class ReservationMedicineDto {
+	MedicineDto medicine;
+	Integer amount;
 
-	private Integer id;
-
-	private Integer amount;
-	
 	public ReservationMedicineDto() {
 		super();
 	}
 
-	public ReservationMedicineDto(Integer id, Integer amount) {
+	public ReservationMedicineDto(MedicineDto medicine, Integer amount) {
 		super();
-		this.id = id;
+		this.medicine = medicine;
 		this.amount = amount;
 	}
-
-	public Integer getId() {
-		return id;
+	
+	public MedicineDto getMedicine() {
+		return medicine;
 	}
-
-	public void setId(Integer id) {
-		this.id = id;
+	public void setMedicine(MedicineDto medicine) {
+		this.medicine = medicine;
 	}
-
 	public Integer getAmount() {
 		return amount;
 	}
-
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}

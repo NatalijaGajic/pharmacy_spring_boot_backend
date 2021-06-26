@@ -30,9 +30,10 @@ public class Reservation {
 	
 	private Integer clientId;
 
-	public Reservation(Date dateOfReservation, Date dateOfPickUp, boolean isCancelled, 
+	public Reservation(Integer id, Date dateOfReservation, Date dateOfPickUp, boolean isCancelled, 
 			String status, Integer clientId, UUID reservationCode) {
 		super();
+		this.id = id;
 		this.dateOfReservation = dateOfReservation;
 		this.dateOfPickUp = dateOfPickUp;
 		this.isCancelled = isCancelled;
