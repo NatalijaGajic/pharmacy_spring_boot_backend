@@ -1,5 +1,7 @@
 package com.example.reservation_medicine_app.dto;
 
+import com.example.medicine_app.dto.MedicineDto;
+
 public class ReservationMedicineDto {
 	MedicineDto medicine;
 	Integer amount;
