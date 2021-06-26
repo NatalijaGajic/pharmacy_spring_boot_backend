@@ -1,13 +1,18 @@
 package com.example.user_alergies_app.dto;
 
 import java.util.Collection;
+import java.util.List;
 
 public class UserAlergiesCreationDTO {
 	
 	private Integer userId;
 
-	private Collection<Integer> medicineIds;
+	private List<Integer> medicineIds;
 	
+	public UserAlergiesCreationDTO() {
+		super();
+	}
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -16,11 +21,11 @@ public class UserAlergiesCreationDTO {
 		this.userId = userId;
 	}
 
-	public Collection<Integer> getMedicineIds() {
+	public List<Integer> getMedicineIds() {
 		return medicineIds;
 	}
 
-	public void setMedicineIds(Collection<Integer> medicineIds) {
+	public void setMedicineIds(List<Integer> medicineIds) {
 		this.medicineIds = medicineIds;
 	}
 
