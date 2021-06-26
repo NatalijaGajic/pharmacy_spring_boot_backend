@@ -2,7 +2,6 @@ package com.example.system_user_app.dto;
 
 import java.util.Date;
 
-import com.example.system_user_app.model.SystemRole;
 
 public class ClientCreationDTO {
 	
@@ -20,7 +19,78 @@ public class ClientCreationDTO {
 	
 	private Date dateOfBirth;
 	
-	private SystemRole systemRole;
+	private Integer systemRoleId;
 	
+	public Integer getSystemRoleId() {
+		return systemRoleId;
+	}
+
+	public void setSystemRoleId(Integer systemRoleId) {
+		this.systemRoleId = systemRoleId;
+	}
+
 	private Integer numberOfPenalties;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	public Integer getNumberOfPenalties() {
+		return numberOfPenalties;
+	}
+
+	public void setNumberOfPenalties(Integer numberOfPenalties) {
+		this.numberOfPenalties = numberOfPenalties;
+	}
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.system_user_app.dto.SystemRoleDTO;
-import com.example.system_user_app.model.SystemRole;
 
 @Service
 public class SystemRoleServiceImpl implements SystemRoleService{
@@ -19,13 +18,13 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	private ModelMapper mapper;
 	
 	@Override
-	public SystemRole getRoleById(Integer id) {
+	public SystemRoleDTO getRoleById(Integer id) {
 		RestTemplate restTemplate = new RestTemplate();
 		String uri = "http://localhost:8010/system-roles/"+Integer.toString(id);
 		ResponseEntity<SystemRoleDTO> responseEntity = restTemplate.getForEntity(uri, SystemRoleDTO.class);
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
 			SystemRoleDTO dto = responseEntity.getBody();
-			return mapper.map(dto, SystemRole.class);
+			return mapper.map(dto, SystemRoleDTO.class);
 			
 		}else {
 			return null;
@@ -33,7 +32,7 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 	}
 
 	@Override
-	public Collection<SystemRole> getRoles() {
+	public Collection<SystemRoleDTO> getRoles() {
 		// TODO Auto-generated method stub
 		return null;
 	}
