@@ -1,5 +1,6 @@
 package com.example.reservation_app.jdbc_repository;
 
+import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -46,12 +47,13 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
 
         return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) ->
                 new Reservation(
+                		rs.getInt("id"),
                         rs.getDate("date_of_reservation"),
                         rs.getDate("date_of_pick_up"),
                 		rs.getBoolean("is_cancelled"),
                         rs.getString("status"),
                         rs.getInt("client_id"),
-                        UUID.fromString(rs.getString("reservation_code"))
+                        UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
                 ));
 	}
 
@@ -60,12 +62,13 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
 		String query = "select * from reservation";
 		return jdbcTemplate.query(query, (rs, rowNum) ->
 		new Reservation(
+				rs.getInt("id"),
                 rs.getDate("date_of_reservation"),
                 rs.getDate("date_of_pick_up"),
         		rs.getBoolean("is_cancelled"),
                 rs.getString("status"),
                 rs.getInt("client_id"),
-                UUID.fromString(rs.getString("reservation_code"))
+                UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
         ));
 	}
 
@@ -80,13 +83,22 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
 		String query = "select * from reservation where client_id="+clientId;
 		return jdbcTemplate.query(query, (rs, rowNum) ->
 		new Reservation(
+				rs.getInt("id"),
                 rs.getDate("date_of_reservation"),
                 rs.getDate("date_of_pick_up"),
         		rs.getBoolean("is_cancelled"),
                 rs.getString("status"),
                 rs.getInt("client_id"),
-                UUID.fromString(rs.getString("reservation_code"))
+                UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
         ));
+	}
+	
+	private static String getGuidFromByteArray(byte[] bytes) {
+	    ByteBuffer bb = ByteBuffer.wrap(bytes);
+	    long high = bb.getLong();
+	    long low = bb.getLong();
+	    UUID uuid = new UUID(high, low);
+	    return uuid.toString();
 	}
 
 }

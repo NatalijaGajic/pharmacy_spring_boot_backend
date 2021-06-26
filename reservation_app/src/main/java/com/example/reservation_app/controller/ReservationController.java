@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.reservation_app.dto.ReservationCreationDTO;
+import com.example.reservation_app.dto.ReservationDetailsDTO;
 import com.example.reservation_app.dto.ReservationUpdateDto;
 import com.example.reservation_app.jdbc_repository.ReservationJdbcRepository;
 import com.example.reservation_app.model.Reservation;
@@ -82,8 +83,8 @@ public class ReservationController {
 	@GetMapping("reservations/{id}")
 	private ResponseEntity<?> getReservationById(@PathVariable Integer id) {
 		try {
-			Reservation reservation = reservationService.findById(id);
-			return new ResponseEntity<>(reservation, HttpStatus.OK);
+			ReservationDetailsDTO reservation = reservationService.findReservationDetailsById(id);
+			return new ResponseEntity<ReservationDetailsDTO>(reservation, HttpStatus.OK);
 		}catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -103,6 +104,6 @@ public class ReservationController {
 	
 	private Reservation convertReservationCreationDtoToReservation(ReservationCreationDTO reservationCreation) {
 		UUID code = UUID.randomUUID();
-		return new Reservation(reservationCreation.getDateOfReservation(), reservationCreation.getDateOfPickUp(), reservationCreation.isCancelled(), reservationCreation.getStatus(), reservationCreation.getClientId(), code);
+		return new Reservation(reservationCreation.getClientId(), reservationCreation.getDateOfReservation(), reservationCreation.getDateOfPickUp(), reservationCreation.isCancelled(), reservationCreation.getStatus(), reservationCreation.getClientId(), code);
 	}
 }

@@ -4,13 +4,13 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 
-import com.example.reservation_app.dto.MedicineDTO;
+import com.example.reservation_app.dto.MedicineDto;
 
 @Service
 public class MedicineServiceImpl implements MedicineService{
 
 	@Override
-	public Collection<MedicineDTO> getMedicinesFromIds() {
+	public Collection<MedicineDto> getMedicinesFromIds() {
 		// TODO Auto-generated method stub
 		return null;
 	}

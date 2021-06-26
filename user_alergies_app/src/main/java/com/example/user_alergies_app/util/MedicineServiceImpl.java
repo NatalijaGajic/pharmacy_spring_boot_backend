@@ -1,12 +1,9 @@
-package com.example.reservation_medicine_app.util;
+package com.example.user_alergies_app.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -14,14 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.medicine_app.dto.MedicineDto;
-import com.example.reservation_medicine_app.dto.MedicineIdsDto;
+import com.example.user_alergies_app.dto.MedicineDto;
+import com.example.user_alergies_app.dto.MedicineIdsDto;
 
 @Service
 public class MedicineServiceImpl implements MedicineService{
-
-	@Autowired
-	private ModelMapper mapper;
 	
 	@Override
 	public Collection<MedicineDto> getMedicinesByIds(MedicineIdsDto medicineIdsDto) {
@@ -42,4 +36,7 @@ public class MedicineServiceImpl implements MedicineService{
 			return null;
 		}
 	}
+	
+	
+
 }

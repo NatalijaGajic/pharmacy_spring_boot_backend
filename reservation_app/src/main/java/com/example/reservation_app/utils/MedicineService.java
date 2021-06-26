@@ -4,12 +4,12 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 
-import com.example.reservation_app.dto.MedicineDTO;
+import com.example.reservation_app.dto.MedicineDto;
 
 
 @Service
 public interface MedicineService {
 
-	public Collection<MedicineDTO> getMedicinesFromIds();
+	public Collection<MedicineDto> getMedicinesFromIds();
 	public void updateMedicines();
 }
