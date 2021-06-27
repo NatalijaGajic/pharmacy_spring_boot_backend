@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,13 +57,16 @@ public class ReservationController {
 		return reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
 		
 	}
-	
-	//TODO: make clientId query param
+
 	@GetMapping("reservations/client/{id}")
 	private ResponseEntity<?> getReservationsByClientId(@PathVariable Integer id){
 		try {
 			//TODO: check client
-			return new ResponseEntity<>(reservationService.findByClient(id), HttpStatus.OK);
+			Collection<ReservationDTO> response = reservationService.findByClient(id);
+			if(response.size() > 0) {
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+			return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
 			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
@@ -105,5 +109,18 @@ public class ReservationController {
 		}
 	}
 	
+	@DeleteMapping("reservations/{id}")
+	private ResponseEntity<?> deleteReservation(@PathVariable Integer id) {
+		try {
+			Reservation reservation = reservationService.findById(id);
+			if(reservation == null) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			reservationService.deleteReservation(reservation);
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		}catch(Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
 
 }

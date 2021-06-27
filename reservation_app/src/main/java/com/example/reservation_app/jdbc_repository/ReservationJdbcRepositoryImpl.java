@@ -85,7 +85,10 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
 
 	@Override
 	public void delete(Reservation reservation) {
-		jdbcTemplate.execute("delete from reservation where id="+reservation.getId().toString());
+		String sql = "UPDATE reservation\r\n"
+				+ "	SET status=?\r\n"
+				+ "	WHERE id="+Integer.toString(reservation.getId());
+		jdbcTemplate.update(sql, new Object[] {"Deleted"});
 		
 	}
 

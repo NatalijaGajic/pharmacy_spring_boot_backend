@@ -245,4 +245,10 @@ public class ReservationServiceImpl implements ReservationService {
 		}
 		
 	}
+
+	@Override
+	public void deleteReservation(Reservation res) {
+		reservationRepository.delete(res);
+		
+	}
 }

@@ -26,4 +26,5 @@ public interface ReservationService {
 	Reservation findById(Integer id) throws Exception;
 	ReservationDetailsDTO findReservationDetailsById(Integer id) throws Exception;
 	Collection<ReservationDTO> findAllReservations(Date dateOfReservation, Date dateOfPickUp);
+	void deleteReservation(Reservation res);
 }
