@@ -8,11 +8,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.reservation_app.dto.ClientDTO;
 import com.example.reservation_app.dto.ReservationDTO;
 import com.example.reservation_app.dto.ReservationDetailsDTO;
 import com.example.reservation_app.dto.ReservationMedicineDto;
 import com.example.reservation_app.jdbc_repository.ReservationJdbcRepository;
 import com.example.reservation_app.model.Reservation;
+import com.example.reservation_app.utils.ClientService;
 import com.example.reservation_app.utils.ReservationMedicineService;
 
 @Service
@@ -23,6 +25,9 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Autowired
 	private ReservationMedicineService reservationMedicineService;
+	
+	@Autowired
+	private ClientService clientService; 
 	
 	@Override
 	public Collection<Reservation> findAllByDateOfReservation(Date dateOfReservation) {
@@ -81,7 +86,8 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	private ReservationDTO mapReservationToReservationDto(Reservation res) {
 		ReservationDTO dto = new ReservationDTO(res.getId(), res.getReservationCode(), res.getDateOfReservation(), res.getDateOfPickUp(), res.getPrice(), res.isCancelled(), res.getStatus());
-		//GET CLIENT
+		ClientDTO client =  clientService.getClientById(res.getClientId());
+		dto.setClient(client);
 		return dto;
 	}
 
