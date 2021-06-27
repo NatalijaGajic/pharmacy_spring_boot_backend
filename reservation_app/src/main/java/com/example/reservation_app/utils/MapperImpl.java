@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.example.reservation_app.dto.ClientDTO;
+import com.example.reservation_app.dto.MedicineDto;
+import com.example.reservation_app.dto.MedicineUpdateDto;
 import com.example.reservation_app.dto.ReservationCreationDTO;
 import com.example.reservation_app.dto.ReservationDTO;
+import com.example.reservation_app.dto.ReservationUpdateDto;
 import com.example.reservation_app.model.Reservation;
 
 @Component
@@ -26,5 +29,11 @@ public class MapperImpl implements Mapper {
 		ClientDTO client =  clientService.getClientById(res.getClientId());
 		dto.setClient(client);
 		return dto;
+	}
+
+	@Override
+	public MedicineUpdateDto mapMedicineDtoToMedicineUpdateDto(MedicineDto medicineDto) {
+		MedicineUpdateDto updateDto = new MedicineUpdateDto(medicineDto.getName(), medicineDto.getPrice(), medicineDto.getManufacturer(), medicineDto.getDescription(), medicineDto.getQuantity());
+		return updateDto;
 	}
 }

@@ -90,7 +90,7 @@ public class ReservationController {
 			ReservationDetailsDTO reservation = reservationService.findReservationDetailsById(id);
 			return new ResponseEntity<ReservationDetailsDTO>(reservation, HttpStatus.OK);
 		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
@@ -101,7 +101,7 @@ public class ReservationController {
 			reservationService.updateReservationStatus(reservation, statusDto.getStatus());
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}catch(Exception e) {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	

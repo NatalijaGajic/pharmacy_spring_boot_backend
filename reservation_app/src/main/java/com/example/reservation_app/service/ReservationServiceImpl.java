@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.reservation_app.dto.ClientDTO;
 import com.example.reservation_app.dto.MedicineDto;
 import com.example.reservation_app.dto.MedicineIdsDto;
@@ -107,14 +107,40 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public Reservation cancelReservation(Reservation reservation) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(reservation.getStatus().equalsIgnoreCase("cancelled")) {
+			throw new Exception("Reservation is already cancelled");
+		}
+		Date dateOfPickup = reservation.getDateOfPickUp();
+		Date currentDate = new Date();
+		long diffInMillies = Math.abs(dateOfPickup.getTime() - currentDate.getTime());
+		long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+		if(diff < 24) {
+			ClientDTO client = clientService.getClientById(reservation.getClientId());
+			if(client == null) {
+				throw new Exception("Client not found");
+			}
+			int numberOfPenalties = client.getNumberOfPenalties();
+			if(numberOfPenalties < 3) {
+				client.setNumberOfPenalties(numberOfPenalties + 1);
+			}
+		}
+		Collection<ReservationMedicineDto> reservationMedicines = reservationMedicineService.getReservationMedicine(reservation.getId());
+		addAmountToMedicines(reservationMedicines);
+		reservation.setStatus("Cancelled");
+		return reservationRepository.save(reservation);
 	}
 
 	@Override
 	public Reservation updateReservationStatus(Reservation reservation, String status) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if(status.equalsIgnoreCase("cancelled")) {
+			return cancelReservation(reservation);
+		}else if(status.equalsIgnoreCase("picked-up")) {
+			reservation.setStatus(status);
+			return reservationRepository.save(reservation);
+		}
+		else {
+			throw new Exception("Invalid status");
+		}
 	}
 	
 	@Override
@@ -208,5 +234,15 @@ public class ReservationServiceImpl implements ReservationService {
 			index++;
 		}
 		return price;
+	}
+	
+	private void addAmountToMedicines(Collection<ReservationMedicineDto> reservationMedicines) {
+		for(ReservationMedicineDto rm: reservationMedicines) {
+			Integer newQuantity = rm.getMedicine().getQuantity() + rm.getAmount();
+			rm.getMedicine().setQuantity(newQuantity);
+			MedicineUpdateDto updateDto = customMapper.mapMedicineDtoToMedicineUpdateDto(rm.getMedicine());
+			medicineService.updateMedicines(updateDto, rm.getMedicine().getId());
+		}
+		
 	}
 }

@@ -104,6 +104,7 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
         ));
 	}
 	
+	
 	private static String getGuidFromByteArray(byte[] bytes) {
 	    ByteBuffer bb = ByteBuffer.wrap(bytes);
 	    long high = bb.getLong();
@@ -118,5 +119,7 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
 		    bb.putLong(uuid.getLeastSignificantBits());
 		    return bb.array();
 		  }
+
+	
 
 }
