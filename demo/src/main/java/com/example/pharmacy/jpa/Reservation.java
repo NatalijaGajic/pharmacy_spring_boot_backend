@@ -35,14 +35,6 @@ public class Reservation {
 	@Column(nullable = false)
 	private double price;
 
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
 	private boolean isCancelled;
 	
 	private String status;
@@ -65,6 +57,16 @@ public class Reservation {
 	public Reservation() {
 		
 	}
+	
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
 
 	public Integer getId() {
 		return id;

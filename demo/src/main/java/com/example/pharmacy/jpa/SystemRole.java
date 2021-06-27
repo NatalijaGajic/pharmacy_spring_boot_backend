@@ -24,6 +24,10 @@ public class SystemRole {
 	@OneToMany(mappedBy = "systemRole")
 	private List<SystemUser> systemUsers;
 	
+	public SystemRole() {
+		
+	}
+	
 	public SystemRole(String name, String description) {
 		super();
 		this.name = name;

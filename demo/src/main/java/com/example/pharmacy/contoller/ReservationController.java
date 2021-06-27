@@ -21,8 +21,8 @@ import com.example.pharmacy.dto.ReservationUpdateDto;
 import com.example.pharmacy.jpa.Client;
 import com.example.pharmacy.jpa.Reservation;
 import com.example.pharmacy.repository.ClientRepository;
-import com.example.pharmacy.service.IReservationService;
-import com.example.pharmacy.utils.IMapper;
+import com.example.pharmacy.service.ReservationService;
+import com.example.pharmacy.utils.Mapper;
 
 @RestController
 @EnableTransactionManagement
@@ -30,13 +30,14 @@ public class ReservationController {
 	
 	//TODO: try catch
 	@Autowired
-	private IReservationService reservationService;
+	private ReservationService reservationService;
 	
 	@Autowired
 	private ClientRepository clientRepository;
 	
 	@Autowired
-	private IMapper mapper;
+	private Mapper mapper;
+	
 	
 	@GetMapping("reservations")
 	private Collection<Reservation> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
@@ -87,8 +88,7 @@ public class ReservationController {
 		
 	}
 	
-	//TODO: fix
-	/*@GetMapping("reservations/{id}")
+	@GetMapping("reservations/{id}")
 	private ResponseEntity<?> getReservationById(@PathVariable Integer id) {
 		try {
 			Reservation reservation = reservationService.findById(id);
@@ -96,7 +96,7 @@ public class ReservationController {
 		}catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}*/
+	}
 	
 	@PutMapping("reservations/{id}")
 	private ResponseEntity<?> updateReservation(@PathVariable Integer id, @RequestBody ReservationUpdateDto statusDto) {
@@ -108,7 +108,6 @@ public class ReservationController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
+
 	
 }
