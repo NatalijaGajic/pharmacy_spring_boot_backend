@@ -56,8 +56,8 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Collection<ReservationDTO> findAllByDateOfReservationBetween(Date dateOfReservationStart,
 			Date dateOfReservationEnd) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Reservation> reservations = reservationRepository.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
+		return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
 	}
 
 	@Override
@@ -68,8 +68,8 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Override
 	public Collection<ReservationDTO> findAllByDateOfPickUpBetween(Date dateOfPickUpStart, Date dateOfPickUpEnd) {
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Reservation> reservations = reservationRepository.findAllByDateOfPickUpBetween(dateOfPickUpStart, dateOfPickUpEnd);
+		return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
 	}
 
 
@@ -164,22 +164,25 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public Collection<ReservationDTO> findAllReservations(Date dateOfReservation, Date dateOfPickUp) {
-		Collection<Reservation> reservations = reservationRepository.findAll();
-		Collection<ReservationDTO> dtos = new ArrayList<ReservationDTO>();
-		for(Reservation res: reservations) {
-			dtos.add(customMapper.mapReservationToReservationDto(res));
+		Collection<Reservation> reservations;
+		if(dateOfReservation != null) {
+			reservations = reservationRepository.findAllByDateOfReservation(dateOfReservation);
+			return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
 		}
-		return dtos;
+		if(dateOfPickUp != null) {
+			reservations = reservationRepository.findAllByDateOfPickUp(dateOfPickUp);
+			return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
+		}
+		reservations = reservationRepository.findAll();
+		return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
+
 	}
 
 	@Override
 	public Collection<ReservationDTO> findByClient(Integer clientId) {
 		Collection<Reservation> reservations = reservationRepository.getReservationsForClient(clientId);
-		Collection<ReservationDTO> dtos = new ArrayList<ReservationDTO>();
-		for(Reservation r: reservations) {
-			dtos.add(customMapper.mapReservationToReservationDto(r));
-		}
-		return dtos;
+		return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
+
 	}
 
 	private boolean checkIfAlergic(Collection<UserAlergiesDto> alergyMedicines, Collection<MedicineDto> reservationMedicine) {

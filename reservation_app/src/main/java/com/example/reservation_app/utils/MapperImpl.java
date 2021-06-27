@@ -1,5 +1,7 @@
 package com.example.reservation_app.utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +37,15 @@ public class MapperImpl implements Mapper {
 	public MedicineUpdateDto mapMedicineDtoToMedicineUpdateDto(MedicineDto medicineDto) {
 		MedicineUpdateDto updateDto = new MedicineUpdateDto(medicineDto.getName(), medicineDto.getPrice(), medicineDto.getManufacturer(), medicineDto.getDescription(), medicineDto.getQuantity());
 		return updateDto;
+	}
+
+	@Override
+	public Collection<ReservationDTO> mapReservationCollectionToReservationDTOCollection(
+			Collection<Reservation> reservations) {
+		Collection<ReservationDTO> dtos = new ArrayList<ReservationDTO>();
+		for(Reservation res: reservations) {
+			dtos.add(mapReservationToReservationDto(res));
+		}
+		return dtos;
 	}
 }

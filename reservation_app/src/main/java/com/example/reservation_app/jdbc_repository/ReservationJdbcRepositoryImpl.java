@@ -1,7 +1,10 @@
 package com.example.reservation_app.jdbc_repository;
 
 import java.nio.ByteBuffer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,8 +109,78 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
                 UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
         ));
 	}
+
+	@Override
+	public Collection<Reservation> findAllByDateOfReservationBetween(Date dateOfReservationStart,
+			Date dateOfReservationEnd) {
+		String pattern = "yyyy/MM/dd";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String query = "select * from reservation where date_of_reservation between '"+df.format(dateOfReservationStart)
+				+"' and '"+df.format(dateOfReservationEnd)+"'";
+		return jdbcTemplate.query(query, (rs, rowNum) ->
+		new Reservation(
+				rs.getInt("id"),
+                rs.getDate("date_of_reservation"),
+                rs.getDate("date_of_pick_up"),
+        		rs.getBoolean("is_cancelled"),
+                rs.getString("status"),
+                rs.getInt("client_id"),
+                UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
+        ));
+	}
+
+	@Override
+	public Collection<Reservation> findAllByDateOfPickUpBetween(Date dateOfPickUpStart, Date dateOfPickUpEnd) {
+		String pattern = "yyyy/MM/dd";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String query = "select * from reservation where date_of_pick_up between '"+df.format(dateOfPickUpStart)
+				+"' and '"+df.format(dateOfPickUpEnd)+"'";
+		return jdbcTemplate.query(query, (rs, rowNum) ->
+		new Reservation(
+				rs.getInt("id"),
+                rs.getDate("date_of_reservation"),
+                rs.getDate("date_of_pick_up"),
+        		rs.getBoolean("is_cancelled"),
+                rs.getString("status"),
+                rs.getInt("client_id"),
+                UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
+        ));
+	}
 	
-	
+	@Override
+	public Collection<Reservation> findAllByDateOfReservation(Date dateOfReservation) {
+		String pattern = "yyyy/MM/dd";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String query = "select * from reservation where date_of_reservation='"+df.format(dateOfReservation)+"'";
+		return jdbcTemplate.query(query, (rs, rowNum) ->
+		new Reservation(
+				rs.getInt("id"),
+		        rs.getDate("date_of_reservation"),
+		        rs.getDate("date_of_pick_up"),
+				rs.getBoolean("is_cancelled"),
+		        rs.getString("status"),
+		        rs.getInt("client_id"),
+		        UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
+		));
+	}
+
+	@Override
+	public Collection<Reservation> findAllByDateOfPickUp(Date dateOfPickUp) {
+		String pattern = "yyyy/MM/dd";
+		DateFormat df = new SimpleDateFormat(pattern);
+		String query = "select * from reservation where date_of_pick_up='"+df.format(dateOfPickUp)+"'";
+		return jdbcTemplate.query(query, (rs, rowNum) ->
+		new Reservation(
+				rs.getInt("id"),
+		        rs.getDate("date_of_reservation"),
+		        rs.getDate("date_of_pick_up"),
+				rs.getBoolean("is_cancelled"),
+		        rs.getString("status"),
+		        rs.getInt("client_id"),
+		        UUID.fromString(getGuidFromByteArray(rs.getBytes("reservation_code")))
+		));
+	}
+
 	private static String getGuidFromByteArray(byte[] bytes) {
 	    ByteBuffer bb = ByteBuffer.wrap(bytes);
 	    long high = bb.getLong();
@@ -121,8 +194,7 @@ public class ReservationJdbcRepositoryImpl implements ReservationJdbcRepository{
 		    bb.putLong(uuid.getMostSignificantBits());
 		    bb.putLong(uuid.getLeastSignificantBits());
 		    return bb.array();
-		  }
+	}
 
-	
 
 }

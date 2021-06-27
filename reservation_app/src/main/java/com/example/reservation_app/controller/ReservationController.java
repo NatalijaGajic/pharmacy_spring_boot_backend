@@ -43,18 +43,33 @@ public class ReservationController {
 	private Mapper customMapper;
 	
 	@GetMapping("reservations")
-	private Collection<ReservationDTO> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
-		return reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
+	private ResponseEntity<?> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
+		try {
+			Collection<ReservationDTO> response = reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("reservations/date-of-reservation")
-	private Collection<ReservationDTO> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
-		return reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
+	private ResponseEntity<?> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
+		try {
+			Collection<ReservationDTO> response = reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);;
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("reservations/date-of-pick-up")
-	private Collection<ReservationDTO> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
-		return reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
+	private ResponseEntity<?> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
+		try {
+			Collection<ReservationDTO> response = reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 		
 	}
 
