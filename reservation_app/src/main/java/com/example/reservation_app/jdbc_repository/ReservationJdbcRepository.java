@@ -9,7 +9,7 @@ import com.example.reservation_app.model.Reservation;
 
 @Repository
 public interface ReservationJdbcRepository {
-	public void save(Reservation reservation);
+	public Reservation save(Reservation reservation);
 	public Reservation findById(Integer id);
 	public Collection<Reservation> findAll();
 	public void delete(Reservation reservation);

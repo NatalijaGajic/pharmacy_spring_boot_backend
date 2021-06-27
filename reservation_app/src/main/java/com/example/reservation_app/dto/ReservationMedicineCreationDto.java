@@ -1,4 +1,4 @@
-package com.example.reservation_medicine_app.dto;
+package com.example.reservation_app.dto;
 
 import java.util.List;
 

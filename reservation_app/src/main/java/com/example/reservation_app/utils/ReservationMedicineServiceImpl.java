@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.reservation_app.dto.MedicineDto;
+import com.example.reservation_app.dto.ReservationMedicineCreationDto;
 import com.example.reservation_app.dto.ReservationMedicineDto;
 
 @Service
@@ -36,9 +37,19 @@ public class ReservationMedicineServiceImpl implements ReservationMedicineServic
 	}
 
 	@Override
-	public void createReservationMedicine() {
-		// TODO Auto-generated method stub
-		
+	public boolean createReservationMedicine(ReservationMedicineCreationDto body) {
+		RestTemplate restTemplate = new RestTemplate();
+		HttpEntity entity = new HttpEntity<>(body);
+		String uri = "http://localhost:8050/reservation-medicines";
+		ResponseEntity responseEntity = restTemplate.exchange(uri,
+		        HttpMethod.POST,
+		        entity,
+		        Void.class
+		      );
+ 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
+ 			return true;
+ 		}
+ 		return false;
 	}
 
 }

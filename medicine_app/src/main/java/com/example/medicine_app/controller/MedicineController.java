@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.medicine_app.dto.MedicineCreationUpdateDto;
+import com.example.medicine_app.dto.MedicineCreationDto;
 import com.example.medicine_app.dto.MedicineDto;
 import com.example.medicine_app.dto.MedicineIdsDto;
+import com.example.medicine_app.dto.MedicineUpdateDto;
 import com.example.medicine_app.exceptions.InvalidIdException;
 import com.example.medicine_app.jpa.Medicine;
 import com.example.medicine_app.service.MedicineService;
@@ -88,7 +89,7 @@ public class MedicineController {
 	}
 	
 	@PostMapping("medicines")
-	private ResponseEntity createMedicines(@RequestBody MedicineCreationUpdateDto medicineCreation){
+	private ResponseEntity createMedicines(@RequestBody MedicineCreationDto medicineCreation){
 		
 		try {
 				Medicine Medicine = mapper.map(medicineCreation, Medicine.class);
@@ -103,7 +104,7 @@ public class MedicineController {
 	}
 	
 	@PutMapping("medicines/{id}")
-	private ResponseEntity updateMedicine(@PathVariable Integer id, @RequestBody MedicineDto medicineDto) {
+	private ResponseEntity updateMedicine(@PathVariable Integer id, @RequestBody MedicineUpdateDto medicineDto) {
 		try {
 			Medicine medicine = medicineService.findMedicineById(id);
 			medicine = mapper.map(medicineDto, Medicine.class);

@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.reservation_app.dto.ReservationCreationDTO;
+import com.example.reservation_app.dto.ReservationDTO;
 import com.example.reservation_app.dto.ReservationDetailsDTO;
 import com.example.reservation_app.dto.ReservationUpdateDto;
 import com.example.reservation_app.jdbc_repository.ReservationJdbcRepository;
 import com.example.reservation_app.model.Reservation;
 import com.example.reservation_app.service.ReservationService;
+import com.example.reservation_app.utils.Mapper;
 
 @RestController
 public class ReservationController {
@@ -36,18 +38,21 @@ public class ReservationController {
 	@Autowired
 	private ModelMapper mapper;
 	
+	@Autowired
+	private Mapper customMapper;
+	
 	@GetMapping("reservations")
-	private Collection<Reservation> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
+	private Collection<ReservationDTO> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
 		return reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
 	}
 	
 	@GetMapping("reservations/date-of-reservation")
-	private Collection<Reservation> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
+	private Collection<ReservationDTO> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
 		return reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
 	}
 	
 	@GetMapping("reservations/date-of-pick-up")
-	private Collection<Reservation> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
+	private Collection<ReservationDTO> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
 		return reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
 		
 	}
@@ -68,10 +73,10 @@ public class ReservationController {
 	private ResponseEntity createReservation(@RequestBody ReservationCreationDTO reservationCreation){
 		
 		try {
-				Reservation reservation = convertReservationCreationDtoToReservation(reservationCreation);
-				//TODO: check client
-				reservationService.createReservation(reservation, reservationCreation.getMedicines());
-				return new ResponseEntity(HttpStatus.CREATED);
+				Reservation reservation = customMapper.mapReservationCreationDtoToReservation(reservationCreation);
+				Reservation createdReservation = reservationService.createReservation(reservation, reservationCreation.getMedicines());
+				ReservationDTO dto = customMapper.mapReservationToReservationDto(createdReservation);
+				return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 		}
 		catch(Exception e){
 			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -79,7 +84,6 @@ public class ReservationController {
 		
 	}
 	
-	//TODO: fix
 	@GetMapping("reservations/{id}")
 	private ResponseEntity<?> getReservationById(@PathVariable Integer id) {
 		try {
@@ -101,9 +105,5 @@ public class ReservationController {
 		}
 	}
 	
-	
-	private Reservation convertReservationCreationDtoToReservation(ReservationCreationDTO reservationCreation) {
-		UUID code = UUID.randomUUID();
-		return new Reservation(reservationCreation.getClientId(), reservationCreation.getDateOfReservation(), reservationCreation.getDateOfPickUp(), reservationCreation.isCancelled(), reservationCreation.getStatus(), reservationCreation.getClientId(), code);
-	}
+
 }
