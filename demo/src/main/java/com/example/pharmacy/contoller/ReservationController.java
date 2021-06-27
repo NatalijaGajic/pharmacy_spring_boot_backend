@@ -40,29 +40,49 @@ public class ReservationController {
 	
 	
 	@GetMapping("reservations")
-	private Collection<Reservation> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
-		return reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
+	private ResponseEntity<?>  getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
+		try {
+			Collection<Reservation> reservations = reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
+			return new ResponseEntity<>(reservations, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("reservations/date-of-reservation")
-	private Collection<Reservation> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
-		return reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
+	private ResponseEntity<?> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
+		try {
+			Collection<Reservation> reservations = reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
+			return new ResponseEntity<>(reservations, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+
 	}
 	
 	@GetMapping("reservations/date-of-pick-up")
-	private Collection<Reservation> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
-		return reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
+	private ResponseEntity<?> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
+		try {
+			Collection<Reservation> reservations =  reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
+			return new ResponseEntity<>(reservations, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
+		}
 		
 	}
 	
-	//TODO: make clientId query param
 	@GetMapping("reservations/client/{id}")
 	private ResponseEntity<?> getReservationsByClientId(@PathVariable Integer id){
-		Client client = clientRepository.findById(id).get();
-		if(client != null) {
-			return new ResponseEntity<>(reservationService.findByClient(client), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		try {
+			Client client = clientRepository.findById(id).get();
+			if(client != null) {
+				return new ResponseEntity<>(reservationService.findByClient(client), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
