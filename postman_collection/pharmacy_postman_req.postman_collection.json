@@ -1,0 +1,1087 @@
+{
+	"info": {
+		"_postman_id": "e45402f9-50f6-4243-b8c9-0b0fb770de0b",
+		"name": "pharmacy_postman_req",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "pharmacists",
+			"item": [
+				{
+					"name": "getPharmacistWithUsername",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8020/pharmacists?username=FefaPharmacy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"pharmacists"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "FefaPharmacy"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postPharmacist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"dateOfBirth\":\"1998-01-09\",\r\n\t\"email\":\"dejan@gmail.com\",\r\n\t\"firstName\":\"Dejan\",\r\n\t\"lastName\":\"Tosenberger\",\r\n\t\"password\":\"pass\",\r\n\t\"telephone\":\"+386935283527\",\r\n\t\"username\":\"DejanPharmacist\",\r\n\t\"startDateOfContract\":\"2016-03-03\",\r\n\t\"endDateOfContract\": null,\r\n\t\"salary\": 70000.0,\r\n    \"systemRoleId\": 8\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8020/pharmacists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"pharmacists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPharmacists",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8020/pharmacists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"pharmacists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPharmacistById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8020/pharmacists/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"pharmacists",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePharmacist",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"dateOfBirth\":\"1998-04-05\",\r\n\t\"firstName\":\"Stefan\",\r\n\t\"lastName\":\"Ostojic\",\r\n\t\"telephone\":\"+386935283527\",\r\n\t\"username\":\"FefaPharmacy\",\r\n\t\"startDateOfContract\":\"2016-03-03\",\r\n\t\"endDateOfContract\": null,\r\n\t\"salary\": 100000.0\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/pharmacists/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pharmacists",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllActivePharmacists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8020/pharmacists?active=false",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"pharmacists"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPharmacists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pharmacists",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pharmacists"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePharmacist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/pharmacists/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"pharmacists",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "clients",
+			"item": [
+				{
+					"name": "getClients",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8020/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClientWIthUsername",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8020/clients?username=KrleClient",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"clients"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "KrleClient"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postClient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"dateOfBirth\":\"1998-04-04\",\r\n\t\"email\":\"krle@gmail.com\",\r\n\t\"firstName\":\"Dusan\",\r\n\t\"lastName\":\"Krstic\",\r\n\t\"password\":\"pass\",\r\n\t\"telephone\":\"+381693528527\",\r\n\t\"username\":\"KrleClient\",\r\n\t\"numberOfPenalties\": 0,\r\n    \"systemRoleId\": 1\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8020/clients",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateClient",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"dateOfBirth\":\"1998-04-05\",\r\n\t\"firstName\":\"Dusan\",\r\n\t\"lastName\":\"Krsta\",\r\n\t\"telephone\":\"+386935283527\",\r\n\t\"username\":\"DuleClient\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8020/clients/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"clients",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClientById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8020/clients/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"clients",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteClient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8020/clients/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8020",
+							"path": [
+								"clients",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "medicines",
+			"item": [
+				{
+					"name": "getMedicines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8030/medicines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8030",
+							"path": [
+								"medicines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMedicineWithName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8030/medicines?name=aspirin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8030",
+							"path": [
+								"medicines"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "aspirin"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postMedicine",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Fervex\",\r\n    \"price\":700,\r\n    \"manufacturer\":\"Galenika Petrovac\",\r\n    \"description\":\"Lek za temperaturu\",\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8030/medicines",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8030",
+							"path": [
+								"medicines"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMedicineById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8030/medicines/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8030",
+							"path": [
+								"medicines",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateMedicine",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Aspirin\",\r\n    \"price\":500,\r\n    \"manufacturer\":\"Galenika Petrovac na Mlavi\",\r\n    \"description\":\"Lek za big brain\",\r\n    \"quantity\":420\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8030/medicines/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8030",
+							"path": [
+								"medicines",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMedicine",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8030/medicines/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8030",
+							"path": [
+								"medicines",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMedicinesByIds",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicineIds\":[5,6,7]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8030/medicines-from-ids",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8030",
+							"path": [
+								"medicines-from-ids"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reservations",
+			"item": [
+				{
+					"name": "getReservations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationsWithDateOfReservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations?dateOfReservation=2021-06-05",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "dateOfReservation",
+									"value": "2021-06-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationsWithDateOfPickUp",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations?dateOfPickUp=2021-06-06",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "dateOfPickUp",
+									"value": "2021-06-06"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationsByClient",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations/client/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations",
+								"client",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationsBetweenStartDateOfPickEendDateOfPickup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations/date-of-pick-up?dateOfPickUpStart=2021-01-01&dateOfPickUpEnd=2021-05-05",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations",
+								"date-of-pick-up"
+							],
+							"query": [
+								{
+									"key": "dateOfPickUpStart",
+									"value": "2021-01-01"
+								},
+								{
+									"key": "dateOfPickUpEnd",
+									"value": "2021-05-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationsBetweenStartDateOfReservationEndDateOfReservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations/date-of-reservation?dateOfReservationStart=2020-05-05&dateOfReservationEnd=2021-05-05",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations",
+								"date-of-reservation"
+							],
+							"query": [
+								{
+									"key": "dateOfReservationStart",
+									"value": "2020-05-05"
+								},
+								{
+									"key": "dateOfReservationEnd",
+									"value": "2021-05-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postReservation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"dateOfReservation\":\"2021-06-05\",\r\n    \"dateOfPickUp\":\"2021-06-06\",\r\n    \"status\":\"Created\",\r\n    \"isCanceled\":false,\r\n    \"clientId\":6,\r\n    \"medicines\":[{\"medicineId\": 5, \"amount\":1}, {\"medicineId\": 6, \"amount\":2}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8040/reservations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getReservationsWithDateOfPickUpAndDateOfReservation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations?dateOfPickUp=2021-06-06&dateOfReservation=2021-06-05",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations"
+							],
+							"query": [
+								{
+									"key": "dateOfPickUp",
+									"value": "2021-06-06"
+								},
+								{
+									"key": "dateOfReservation",
+									"value": "2021-06-05"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelReservation",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"cancelled\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8040/reservations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteReservation",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8040/reservations/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8040",
+							"path": [
+								"reservations",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSystemRoleById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8010/system-roles/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8010",
+							"path": [
+								"system-roles",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "roles",
+			"item": [
+				{
+					"name": "getAllSystemRoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8010/system-roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8010",
+							"path": [
+								"system-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSystemRole",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8010/system-roles/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8010",
+							"path": [
+								"system-roles",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postSystemRole",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"New role\",\r\n    \"description\": \"New system role\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8010/system-roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8010",
+							"path": [
+								"system-roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getSystemRoleById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8010/system-roles/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8010",
+							"path": [
+								"system-roles",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSystemRole",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"New role update\",\r\n    \"description\": \"System role update\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8010/system-roles/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8010",
+							"path": [
+								"system-roles",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "userAlergies",
+			"item": [
+				{
+					"name": "postUserAlergies",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"userId\": 6,\r\n    \"medicineIds\": [5,6]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8060/user-alergies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"user-alergies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserMedicines",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8060/user-alergies/user/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"user-alergies",
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUserAlergies",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"medicinesId\":[5]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8060/user-alergies/user/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8060",
+							"path": [
+								"user-alergies",
+								"user",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reservationMedicines",
+			"item": [
+				{
+					"name": "getReservationMedicinesByReservationId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8050/reservation-medicines/reservation/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								"reservation-medicines",
+								"reservation",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
