@@ -21,8 +21,8 @@ import com.example.pharmacy.dto.ReservationUpdateDto;
 import com.example.pharmacy.jpa.Client;
 import com.example.pharmacy.jpa.Reservation;
 import com.example.pharmacy.repository.ClientRepository;
-import com.example.pharmacy.service.IReservationService;
-import com.example.pharmacy.utils.IMapper;
+import com.example.pharmacy.service.ReservationService;
+import com.example.pharmacy.utils.Mapper;
 
 @RestController
 @EnableTransactionManagement
@@ -30,38 +30,59 @@ public class ReservationController {
 	
 	//TODO: try catch
 	@Autowired
-	private IReservationService reservationService;
+	private ReservationService reservationService;
 	
 	@Autowired
 	private ClientRepository clientRepository;
 	
 	@Autowired
-	private IMapper mapper;
+	private Mapper mapper;
+	
 	
 	@GetMapping("reservations")
-	private Collection<Reservation> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
-		return reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
+	private ResponseEntity<?>  getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
+		try {
+			Collection<Reservation> reservations = reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
+			return new ResponseEntity<>(reservations, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
 	}
 	
 	@GetMapping("reservations/date-of-reservation")
-	private Collection<Reservation> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
-		return reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
+	private ResponseEntity<?> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
+		try {
+			Collection<Reservation> reservations = reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
+			return new ResponseEntity<>(reservations, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+
 	}
 	
 	@GetMapping("reservations/date-of-pick-up")
-	private Collection<Reservation> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
-		return reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
+	private ResponseEntity<?> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
+		try {
+			Collection<Reservation> reservations =  reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
+			return new ResponseEntity<>(reservations, HttpStatus.OK);
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+
+		}
 		
 	}
 	
-	//TODO: make clientId query param
 	@GetMapping("reservations/client/{id}")
 	private ResponseEntity<?> getReservationsByClientId(@PathVariable Integer id){
-		Client client = clientRepository.findById(id).get();
-		if(client != null) {
-			return new ResponseEntity<>(reservationService.findByClient(client), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		try {
+			Client client = clientRepository.findById(id).get();
+			if(client != null) {
+				return new ResponseEntity<>(reservationService.findByClient(client), HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
@@ -87,8 +108,7 @@ public class ReservationController {
 		
 	}
 	
-	//TODO: fix
-	/*@GetMapping("reservations/{id}")
+	@GetMapping("reservations/{id}")
 	private ResponseEntity<?> getReservationById(@PathVariable Integer id) {
 		try {
 			Reservation reservation = reservationService.findById(id);
@@ -96,7 +116,7 @@ public class ReservationController {
 		}catch(Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}*/
+	}
 	
 	@PutMapping("reservations/{id}")
 	private ResponseEntity<?> updateReservation(@PathVariable Integer id, @RequestBody ReservationUpdateDto statusDto) {
@@ -108,7 +128,6 @@ public class ReservationController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
+
 	
 }

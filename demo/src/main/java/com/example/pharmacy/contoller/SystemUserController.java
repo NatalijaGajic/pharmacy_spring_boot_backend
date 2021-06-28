@@ -18,7 +18,7 @@ public class SystemUserController {
 	private ClientRepository clientRepository;
 	@Autowired
 	private PharmacistRepository pharmacistRepository;
-	
+
 	@GetMapping("pharmacists")
 	public ResponseEntity<?> getPharmacists(@RequestParam(required = false) String username, @RequestParam(required = false) String active){
 		if(username == null) {

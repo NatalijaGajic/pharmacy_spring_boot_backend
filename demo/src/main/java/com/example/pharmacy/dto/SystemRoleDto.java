@@ -1,34 +1,19 @@
-package com.example.pharmacy.jpa;
+package com.example.pharmacy.dto;
 
 
-import java.util.List;
+public class SystemRoleDto {
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-@Entity
-public class SystemRole {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(nullable = false, unique = true)
 	private String name;
 	
-	@Column(nullable = false)
 	private String description;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "systemRole")
-	private List<SystemUser> systemUsers;
-	
-	public SystemRole() {
+	public SystemRoleDto() {
 		
 	}
 	
-	public SystemRole(String name, String description) {
+	public SystemRoleDto(String name, String description) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -58,5 +43,4 @@ public class SystemRole {
 		this.description = description;
 	}
 
-	
 }

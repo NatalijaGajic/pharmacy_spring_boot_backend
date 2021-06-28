@@ -15,7 +15,7 @@ public class ReservationCreationDTO {
 
 	private Integer clientId;
 	
-	private List<ReservationMedicineDto> medicines;
+	private List<MedicineWithAmountDto> medicines;
 
 	public Date getDateOfReservation() {
 		return dateOfReservation;
@@ -57,11 +57,11 @@ public class ReservationCreationDTO {
 		this.clientId = clientId;
 	}
 
-	public List<ReservationMedicineDto> getMedicines() {
+	public List<MedicineWithAmountDto> getMedicines() {
 		return medicines;
 	}
 
-	public void setMedicines(List<ReservationMedicineDto> medicines) {
+	public void setMedicines(List<MedicineWithAmountDto> medicines) {
 		this.medicines = medicines;
 	}
 }

@@ -16,6 +16,7 @@ public class ReservationAppApplication {
 		mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		return mapper;
 	}
+
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ReservationAppApplication.class, args);
