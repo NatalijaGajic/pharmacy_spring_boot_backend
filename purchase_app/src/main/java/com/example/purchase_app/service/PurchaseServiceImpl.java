@@ -29,7 +29,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
 	@Override
 	public void createPurchase(Purchase purchase) {
-		// TODO Auto-generated method stub
+		purchaseRepository.save(purchase);
 	}
 
 	@Override
@@ -57,20 +57,41 @@ public class PurchaseServiceImpl implements PurchaseService{
 
 	@Override
 	public PurchaseDTO getByPurchaseId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Purchase purchase = purchaseRepository.findByPurchaseId(id);
+		PurchaseDTO purchaseDTO = new PurchaseDTO();
+		Integer pharmacistId = purchase.getPharmacistId();
+		Integer reservationId = purchase.getReservationId();
+		PharmacistDTO pharmacist = this.userService.getPharmacistsById(pharmacistId);
+		ReservationDTO reservation = this.reservationService.getReservationById(reservationId);
+		
+		purchaseDTO.setId(purchase.getId());
+		purchaseDTO.setDateOfPurchase(purchase.getDateOfPurchase());
+		purchaseDTO.setPaymentType(purchase.getPaymentType());
+		purchaseDTO.setPharmacist(pharmacist);
+		purchaseDTO.setReservation(reservation);
+		return purchaseDTO;
 	}
 
 	@Override
 	public PurchaseDTO getByReservationId(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Purchase purchase = purchaseRepository.findByReservationId(id);
+		PurchaseDTO purchaseDTO = new PurchaseDTO();
+		Integer pharmacistId = purchase.getPharmacistId();
+		Integer reservationId = purchase.getReservationId();
+		PharmacistDTO pharmacist = this.userService.getPharmacistsById(pharmacistId);
+		ReservationDTO reservation = this.reservationService.getReservationById(reservationId);
+		
+		purchaseDTO.setId(purchase.getId());
+		purchaseDTO.setDateOfPurchase(purchase.getDateOfPurchase());
+		purchaseDTO.setPaymentType(purchase.getPaymentType());
+		purchaseDTO.setPharmacist(pharmacist);
+		purchaseDTO.setReservation(reservation);
+		return purchaseDTO;
 	}
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
-		
+		purchaseRepository.delete(id);
 	}
 
 }
