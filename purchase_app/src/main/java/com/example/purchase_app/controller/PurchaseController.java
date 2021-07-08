@@ -19,7 +19,6 @@ import com.example.purchase_app.dto.PurchaseCreationDto;
 import com.example.purchase_app.dto.PurchaseDTO;
 import com.example.purchase_app.model.Purchase;
 import com.example.purchase_app.service.PurchaseService;
-import com.example.reservation_medicine_app.dto.ReservationMedicineDto;
 
 
 @RestController

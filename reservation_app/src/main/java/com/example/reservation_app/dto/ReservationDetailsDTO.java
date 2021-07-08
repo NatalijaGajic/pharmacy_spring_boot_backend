@@ -1,25 +1,28 @@
 package com.example.reservation_app.dto;
 
 import java.util.Collection;
-import java.util.Date;
-import java.util.UUID;
+
+import com.example.pharmacy.dto.ReservationMedicineDto;
+
+
+
 
 public class ReservationDetailsDTO {
 	
-	private ReservationDTO reservation;
+	private ReservationDto reservation;
 	
 	private Collection<ReservationMedicineDto> medicines;
 
 	
-	public ReservationDTO getReservation() {
+	public ReservationDto getReservation() {
 		return reservation;
 	}
 
-	public void setReservation(ReservationDTO reservation) {
+	public void setReservation(ReservationDto reservation) {
 		this.reservation = reservation;
 	}	
 
-	public ReservationDetailsDTO(ReservationDTO reservation,
+	public ReservationDetailsDTO(ReservationDto reservation,
 			Collection<ReservationMedicineDto> medicines) {
 		super();
 		this.reservation = reservation;

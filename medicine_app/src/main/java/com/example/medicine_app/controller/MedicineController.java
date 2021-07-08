@@ -18,13 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.medicine_app.dto.MedicineCreationDto;
-import com.example.medicine_app.dto.MedicineDto;
-import com.example.medicine_app.dto.MedicineIdsDto;
-import com.example.medicine_app.dto.MedicineUpdateDto;
-import com.example.medicine_app.exceptions.InvalidIdException;
 import com.example.medicine_app.jpa.Medicine;
 import com.example.medicine_app.service.MedicineService;
+import com.example.pharmacy.dto.MedicineCreationDto;
+import com.example.pharmacy.dto.MedicineDto;
+import com.example.pharmacy.dto.MedicineIdsDto;
+import com.example.pharmacy.dto.MedicineUpdateDto;
 
 @RestController
 public class MedicineController {

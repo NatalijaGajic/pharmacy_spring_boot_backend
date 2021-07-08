@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.system_user_app.dto.SystemRoleDTO;
+import com.example.pharmacy.dto.SystemRoleDto;
 import com.example.system_user_app.exceptions.InvalidIdException;
 import com.example.system_user_app.jdbc_repository.ClientJdbcRepository;
 import com.example.system_user_app.model.Client;
@@ -24,7 +24,7 @@ public class ClientServiceImpl implements ClientService{
 	@Override
 	public Client getClientById(Integer id) throws Exception {
 		Client client = this.clientRepository.findById(id);
-		SystemRoleDTO role = systemRoleService.getRoleById(client.getSystemRole().getId());
+		SystemRoleDto role = systemRoleService.getRoleById(client.getSystemRole().getId());
 		if(role != null) {
 			client.setSystemRole(role);
 		}
@@ -43,7 +43,7 @@ public class ClientServiceImpl implements ClientService{
 			clients = this.clientRepository.findAll();
 		}
 		for(Client client: clients) {
-			SystemRoleDTO role = systemRoleService.getRoleById(client.getSystemRole().getId());
+			SystemRoleDto role = systemRoleService.getRoleById(client.getSystemRole().getId());
 			if(role != null) {
 				client.setSystemRole(role);
 			}

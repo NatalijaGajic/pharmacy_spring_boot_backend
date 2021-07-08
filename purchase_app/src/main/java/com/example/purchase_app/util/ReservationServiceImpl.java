@@ -11,22 +11,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.example.purchase_app.dto.PharmacistDTO;
-import com.example.purchase_app.dto.ReservationDTO;
+
+import com.example.pharmacy.dto.ReservationDto;
 
 @Service
 public class ReservationServiceImpl implements ReservationService{
 	@Override
-	public ReservationDTO getReservationById(Integer id) {
+	public ReservationDto getReservationById(Integer id) {
 		RestTemplate restTemplate = new RestTemplate();
 		String uri = "http://localhost:8040/reservation/" + id.toString();
-		ResponseEntity<ReservationDTO> responseEntity = restTemplate.exchange(uri,
+		ResponseEntity<ReservationDto> responseEntity = restTemplate.exchange(uri,
 		        HttpMethod.GET,
 		        null,
-		        ReservationDTO.class
+		        ReservationDto.class
 		      );
 		if(responseEntity.getStatusCode() == HttpStatus.OK) {
-			ReservationDTO reservation = responseEntity.getBody();
+			ReservationDto reservation = responseEntity.getBody();
 			return reservation;
 		}else {
 			return null;

@@ -8,8 +8,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.reservation_medicine_app.dto.MedicineDto;
-import com.example.reservation_medicine_app.dto.MedicineIdsDto;
+import com.example.pharmacy.dto.MedicineDto;
+import com.example.pharmacy.dto.MedicineIdsDto;
 import com.example.reservation_medicine_app.dto.ReservationMedicineDto;
 import com.example.reservation_medicine_app.jdbc_repository.ReservationMedicineJdbcRepository;
 import com.example.reservation_medicine_app.model.ReservationMedicine;

@@ -11,9 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.reservation_app.dto.MedicineDto;
-import com.example.reservation_app.dto.MedicineIdsDto;
-import com.example.reservation_app.dto.MedicineUpdateDto;
+import com.example.pharmacy.dto.MedicineDto;
+import com.example.pharmacy.dto.MedicineIdsDto;
+import com.example.pharmacy.dto.MedicineUpdateDto;
+
 
 @Service
 public class MedicineServiceImpl implements MedicineService{
@@ -41,7 +42,7 @@ public class MedicineServiceImpl implements MedicineService{
 	@Override
 	public boolean updateMedicines(MedicineUpdateDto body, Integer id) {
 		RestTemplate restTemplate = new RestTemplate();
-		String uri = "http://localhost:8030/medicines/"+id.toString();
+		String uri = "http://localhost:8030/medicines/"+id.toString(); 
 		HttpEntity entity = new HttpEntity<>(body);
 		ResponseEntity responseEntity = restTemplate.exchange(uri,
 		        HttpMethod.PUT,

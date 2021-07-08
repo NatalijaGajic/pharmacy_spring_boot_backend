@@ -40,6 +40,21 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.dependency.dtos</groupId>
+			<artifactId>dependencyDtos</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alergy.dtos</groupId>
+			<artifactId>alergyDtos</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rm.dtos</groupId>
+			<artifactId>reservationMedicineDtos</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.2.19</version>

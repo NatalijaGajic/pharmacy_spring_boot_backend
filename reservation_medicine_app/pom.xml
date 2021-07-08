@@ -40,7 +40,11 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.2.19</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.dependency.dtos</groupId>
+			<artifactId>dependencyDtos</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

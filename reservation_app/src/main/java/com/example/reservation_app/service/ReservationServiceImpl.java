@@ -8,16 +8,16 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.reservation_app.dto.ClientDTO;
-import com.example.reservation_app.dto.MedicineDto;
-import com.example.reservation_app.dto.MedicineIdsDto;
-import com.example.reservation_app.dto.MedicineUpdateDto;
+
+import com.example.pharmacy.dto.ClientDto;
+import com.example.pharmacy.dto.MedicineDto;
+import com.example.pharmacy.dto.MedicineIdsDto;
+import com.example.pharmacy.dto.MedicineUpdateDto;
+import com.example.pharmacy.dto.ReservationMedicineDto;
 import com.example.reservation_app.dto.MedicineWithAmountDto;
-import com.example.reservation_app.dto.ReservationDTO;
 import com.example.reservation_app.dto.ReservationDetailsDTO;
+import com.example.reservation_app.dto.ReservationDto;
 import com.example.reservation_app.dto.ReservationMedicineCreationDto;
-import com.example.reservation_app.dto.ReservationMedicineDto;
-import com.example.reservation_app.dto.UserAlergiesDto;
 import com.example.reservation_app.jdbc_repository.ReservationJdbcRepository;
 import com.example.reservation_app.model.Reservation;
 import com.example.reservation_app.utils.ClientService;
@@ -25,6 +25,7 @@ import com.example.reservation_app.utils.Mapper;
 import com.example.reservation_app.utils.MedicineService;
 import com.example.reservation_app.utils.ReservationMedicineService;
 import com.example.reservation_app.utils.UserAlergiesService;
+import com.example.user_alergies_app.dto.UserAlergiesDto;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -48,26 +49,26 @@ public class ReservationServiceImpl implements ReservationService {
 	private Mapper customMapper; 
 	
 	@Override
-	public Collection<ReservationDTO> findAllByDateOfReservation(Date dateOfReservation) {
+	public Collection<ReservationDto> findAllByDateOfReservation(Date dateOfReservation) {
 		// TODO Auto-generated method stub
 				return null;
 	}
 
 	@Override
-	public Collection<ReservationDTO> findAllByDateOfReservationBetween(Date dateOfReservationStart,
+	public Collection<ReservationDto> findAllByDateOfReservationBetween(Date dateOfReservationStart,
 			Date dateOfReservationEnd) {
 		Collection<Reservation> reservations = reservationRepository.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);
 		return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
 	}
 
 	@Override
-	public Collection<ReservationDTO> findAllByDateOfPickUp(Date dateOfPickUp) {
+	public Collection<ReservationDto> findAllByDateOfPickUp(Date dateOfPickUp) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Collection<ReservationDTO> findAllByDateOfPickUpBetween(Date dateOfPickUpStart, Date dateOfPickUpEnd) {
+	public Collection<ReservationDto> findAllByDateOfPickUpBetween(Date dateOfPickUpStart, Date dateOfPickUpEnd) {
 		Collection<Reservation> reservations = reservationRepository.findAllByDateOfPickUpBetween(dateOfPickUpStart, dateOfPickUpEnd);
 		return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
 	}
@@ -76,7 +77,7 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Reservation createReservation(Reservation reservation, List<MedicineWithAmountDto> medicinesWithAmount) throws Exception{
 		Integer clientId = reservation.getClientId();
-		ClientDTO client = clientService.getClientById(clientId);
+		ClientDto client = clientService.getClientById(clientId);
 		if(client == null) {
 			throw new Exception("Conflict");
 		}
@@ -115,7 +116,7 @@ public class ReservationServiceImpl implements ReservationService {
 		long diffInMillies = Math.abs(dateOfPickup.getTime() - currentDate.getTime());
 		long diff = TimeUnit.HOURS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 		if(diff < 24) {
-			ClientDTO client = clientService.getClientById(reservation.getClientId());
+			ClientDto client = clientService.getClientById(reservation.getClientId());
 			if(client == null) {
 				throw new Exception("Client not found");
 			}
@@ -147,13 +148,12 @@ public class ReservationServiceImpl implements ReservationService {
 	public ReservationDetailsDTO findReservationDetailsById(Integer id) throws Exception {
 		Reservation res = findById(id);
 		Collection<ReservationMedicineDto> medicines = reservationMedicineService.getReservationMedicine(id);
-		ReservationDTO resDto = customMapper.mapReservationToReservationDto(res);
+		ReservationDto resDto = customMapper.mapReservationToReservationDto(res);
 		ReservationDetailsDTO dto = new ReservationDetailsDTO(resDto, medicines);
 		return dto;
 		
 	}
 	
-
 
 	@Override
 	public Reservation findById(Integer id) throws Exception {
@@ -163,7 +163,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 	
 	@Override
-	public Collection<ReservationDTO> findAllReservations(Date dateOfReservation, Date dateOfPickUp) {
+	public Collection<ReservationDto> findAllReservations(Date dateOfReservation, Date dateOfPickUp) {
 		Collection<Reservation> reservations;
 		if(dateOfReservation != null) {
 			reservations = reservationRepository.findAllByDateOfReservation(dateOfReservation);
@@ -179,7 +179,7 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 
 	@Override
-	public Collection<ReservationDTO> findByClient(Integer clientId) {
+	public Collection<ReservationDto> findByClient(Integer clientId) {
 		Collection<Reservation> reservations = reservationRepository.getReservationsForClient(clientId);
 		return customMapper.mapReservationCollectionToReservationDTOCollection(reservations);
 

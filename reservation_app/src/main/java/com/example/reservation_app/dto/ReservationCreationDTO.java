@@ -3,7 +3,7 @@ package com.example.reservation_app.dto;
 import java.util.Date;
 import java.util.List;
 
-public class ReservationCreationDTO {
+public class ReservationCreationDto {
 	
 	private Date dateOfReservation;
 

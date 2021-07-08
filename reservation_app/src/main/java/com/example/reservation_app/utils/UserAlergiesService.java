@@ -4,7 +4,8 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 
-import com.example.reservation_app.dto.UserAlergiesDto;
+import com.example.user_alergies_app.dto.UserAlergiesDto;
+
 
 @Service
 public interface UserAlergiesService {

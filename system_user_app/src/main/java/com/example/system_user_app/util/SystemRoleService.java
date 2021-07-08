@@ -1,14 +1,12 @@
 package com.example.system_user_app.util;
 
 import java.util.Collection;
-
 import org.springframework.stereotype.Service;
-
-import com.example.system_user_app.dto.SystemRoleDTO;
+import com.example.pharmacy.dto.SystemRoleDto;
 
 @Service
 public interface SystemRoleService {
 
-	public SystemRoleDTO getRoleById(Integer id);
-	public Collection<SystemRoleDTO> getRoles();
+	public SystemRoleDto getRoleById(Integer id);
+	public Collection<SystemRoleDto> getRoles();
 }

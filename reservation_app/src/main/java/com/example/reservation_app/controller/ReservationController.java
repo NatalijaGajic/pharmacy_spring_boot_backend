@@ -2,7 +2,6 @@ package com.example.reservation_app.controller;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.UUID;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.reservation_app.dto.ReservationCreationDTO;
-import com.example.reservation_app.dto.ReservationDTO;
+import com.example.pharmacy.dto.ReservationUpdateDto;
+import com.example.reservation_app.dto.ReservationCreationDto;
 import com.example.reservation_app.dto.ReservationDetailsDTO;
-import com.example.reservation_app.dto.ReservationUpdateDto;
+import com.example.reservation_app.dto.ReservationDto;
 import com.example.reservation_app.jdbc_repository.ReservationJdbcRepository;
 import com.example.reservation_app.model.Reservation;
 import com.example.reservation_app.service.ReservationService;
@@ -45,7 +44,7 @@ public class ReservationController {
 	@GetMapping("reservations")
 	private ResponseEntity<?> getReservations(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservation, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUp){
 		try {
-			Collection<ReservationDTO> response = reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
+			Collection<ReservationDto> response = reservationService.findAllReservations(dateOfReservation, dateOfPickUp);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -55,7 +54,7 @@ public class ReservationController {
 	@GetMapping("reservations/date-of-reservation")
 	private ResponseEntity<?> getReservationsBetweenDatesOfReservation(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationStart, @RequestParam(required = false)  @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfReservationEnd){
 		try {
-			Collection<ReservationDTO> response = reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);;
+			Collection<ReservationDto> response = reservationService.findAllByDateOfReservationBetween(dateOfReservationStart, dateOfReservationEnd);;
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -65,7 +64,7 @@ public class ReservationController {
 	@GetMapping("reservations/date-of-pick-up")
 	private ResponseEntity<?> getReservationsBetweenDatesOfPickUp(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpStart, @RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date dateOfPickUpEnd){
 		try {
-			Collection<ReservationDTO> response = reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
+			Collection<ReservationDto> response = reservationService.findAllByDateOfReservationBetween(dateOfPickUpStart, dateOfPickUpEnd);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -77,7 +76,7 @@ public class ReservationController {
 	private ResponseEntity<?> getReservationsByClientId(@PathVariable Integer id){
 		try {
 			//TODO: check client
-			Collection<ReservationDTO> response = reservationService.findByClient(id);
+			Collection<ReservationDto> response = reservationService.findByClient(id);
 			if(response.size() > 0) {
 				return new ResponseEntity<>(response, HttpStatus.OK);
 			}
@@ -89,12 +88,12 @@ public class ReservationController {
 	}
 	
 	@PostMapping("reservations")
-	private ResponseEntity createReservation(@RequestBody ReservationCreationDTO reservationCreation){
+	private ResponseEntity createReservation(@RequestBody ReservationCreationDto reservationCreation){
 		
 		try {
 				Reservation reservation = customMapper.mapReservationCreationDtoToReservation(reservationCreation);
 				Reservation createdReservation = reservationService.createReservation(reservation, reservationCreation.getMedicines());
-				ReservationDTO dto = customMapper.mapReservationToReservationDto(createdReservation);
+				ReservationDto  dto = customMapper.mapReservationToReservationDto(createdReservation);
 				return ResponseEntity.status(HttpStatus.CREATED).body(dto);
 		}
 		catch(Exception e){

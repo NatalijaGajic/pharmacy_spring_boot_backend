@@ -5,13 +5,15 @@ import java.util.List;
 
 import javax.persistence.*;
 
-@Entity
+import com.example.pharmacy.dto.PharmacistDto;
+import com.example.pharmacy.dto.ReservationDto;
+
 public class PurchaseDTO {
 	private Integer id;
 	private Date dateOfPurchase;
 	private String paymentType;
-	private PharmacistDTO pharmacist;
-	private ReservationDTO reservation;
+	private PharmacistDto pharmacist;
+	private ReservationDto reservation;
 	
 	public Integer getId() {
 		return id;
@@ -31,16 +33,16 @@ public class PurchaseDTO {
 	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
 	}
-	public PharmacistDTO getPharmacist() {
+	public PharmacistDto getPharmacist() {
 		return pharmacist;
 	}
-	public void setPharmacist(PharmacistDTO pharmacist) {
+	public void setPharmacist(PharmacistDto pharmacist) {
 		this.pharmacist = pharmacist;
 	}
-	public ReservationDTO getReservation() {
+	public ReservationDto getReservation() {
 		return reservation;
 	}
-	public void setReservation(ReservationDTO reservation) {
+	public void setReservation(ReservationDto reservation) {
 		this.reservation = reservation;
 	}
 }

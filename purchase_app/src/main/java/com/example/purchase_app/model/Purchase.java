@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-@Entity
 public class Purchase {
 	private Integer id;
 	private Date dateOfPurchase;

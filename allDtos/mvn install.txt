@@ -1,0 +1,3 @@
+mvn install:install-file -Dfile="DependencyDtos.jar" -DgroupId="com.dependency.dtos" -DartifactId="dependencyDtos" -Dversion="2.0.0" -Dpackaging="jar"
+mvn install:install-file -Dfile="AlergyDtos.jar" -DgroupId="com.alergy.dtos" -DartifactId="alergyDtos" -Dversion="1.0.0" -Dpackaging="jar"
+mvn install:install-file -Dfile="ReservationMedicineDtos.jar" -DgroupId="com.rm.dtos" -DartifactId="reservationMedicineDtos" -Dversion="1.0.0" -Dpackaging="jar"

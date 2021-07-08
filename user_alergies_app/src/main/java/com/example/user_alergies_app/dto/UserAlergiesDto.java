@@ -1,5 +1,6 @@
 package com.example.user_alergies_app.dto;
 
+import com.example.pharmacy.dto.MedicineDto;
 
 public class UserAlergiesDto {
 	

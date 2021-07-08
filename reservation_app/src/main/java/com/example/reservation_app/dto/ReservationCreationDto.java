@@ -1,49 +1,21 @@
-package com.example.purchase_app.dto;
+package com.example.reservation_app.dto;
 
 import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
-public class ReservationDTO {
-
-	private Integer id;
-	
-	private UUID reservationCode;
+public class ReservationCreationDto {
 	
 	private Date dateOfReservation;
-	
+
 	private Date dateOfPickUp;
-	
-	private double price;
 	
 	private boolean isCancelled;
 	
 	private String status;
+
+	private Integer clientId;
 	
-	private ClientDTO client;
-	
-	public ClientDTO getClient() {
-		return client;
-	}
-
-	public void setClient(ClientDTO client) {
-		this.client = client;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public UUID getReservationCode() {
-		return reservationCode;
-	}
-
-	public void setReservationCode(UUID reservationCode) {
-		this.reservationCode = reservationCode;
-	}
+	private List<MedicineWithAmountDto> medicines;
 
 	public Date getDateOfReservation() {
 		return dateOfReservation;
@@ -59,14 +31,6 @@ public class ReservationDTO {
 
 	public void setDateOfPickUp(Date dateOfPickUp) {
 		this.dateOfPickUp = dateOfPickUp;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
 	}
 
 	public boolean isCancelled() {
@@ -85,4 +49,19 @@ public class ReservationDTO {
 		this.status = status;
 	}
 
+	public Integer getClientId() {
+		return clientId;
+	}
+
+	public void setClientId(Integer clientId) {
+		this.clientId = clientId;
+	}
+
+	public List<MedicineWithAmountDto> getMedicines() {
+		return medicines;
+	}
+
+	public void setMedicines(List<MedicineWithAmountDto> medicines) {
+		this.medicines = medicines;
+	}
 }

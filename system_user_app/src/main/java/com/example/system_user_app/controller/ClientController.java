@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.system_user_app.dto.ClientCreationDTO;
-import com.example.system_user_app.dto.ClientDTO;
-import com.example.system_user_app.dto.ClientUpdateDTO;
-import com.example.system_user_app.dto.PharmacistCreationDTO;
-import com.example.system_user_app.dto.PharmacistDTO;
-import com.example.system_user_app.dto.PharmacistUpdateDTO;
+import com.example.pharmacy.dto.ClientCreationDto;
+import com.example.pharmacy.dto.ClientDto;
+import com.example.pharmacy.dto.ClientUpdateDto;
 import com.example.system_user_app.exceptions.InvalidIdException;
 import com.example.system_user_app.jdbc_repository.ClientJdbcRepository;
 import com.example.system_user_app.jdbc_repository.PharmacistJdbcRepository;
@@ -43,11 +40,11 @@ public class ClientController {
 	private ResponseEntity<?> getAllClients(@RequestParam(required = false) String username){
 		try {
 			Collection<Client> clients = this.clientService.getClients(username);
-			Collection<ClientDTO> collection = new ArrayList<ClientDTO>();
+			Collection<ClientDto> collection = new ArrayList<ClientDto>();
 			for(Client client: clients) {
-				collection.add(mapper.map(client, ClientDTO.class));
+				collection.add(mapper.map(client, ClientDto.class));
 			}
-			return new ResponseEntity<Collection<ClientDTO>>(collection, HttpStatus.OK);
+			return new ResponseEntity<Collection<ClientDto>>(collection, HttpStatus.OK);
 		} catch (Exception e) {
 			if(e.getClass().equals(InvalidIdException.class)) {
 				return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -60,8 +57,8 @@ public class ClientController {
 	private ResponseEntity<?> getClientById(@PathVariable Integer id){
 		try {
 			Client client = this.clientService.getClientById(id);
-			ClientDTO dto = mapper.map(client, ClientDTO.class);
-			return new ResponseEntity<ClientDTO>(dto, HttpStatus.OK);
+			ClientDto dto = mapper.map(client, ClientDto.class);
+			return new ResponseEntity<ClientDto>(dto, HttpStatus.OK);
 		} catch (Exception e) {
 			if(e.getClass().equals(InvalidIdException.class)) {
 				return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -72,7 +69,7 @@ public class ClientController {
 	
 	//TODO: wrong id for PUT, DELETE, POST
 	@PutMapping("clients/{id}")
-	private ResponseEntity<?> updateClient(@PathVariable Integer id, @RequestBody ClientUpdateDTO body){
+	private ResponseEntity<?> updateClient(@PathVariable Integer id, @RequestBody ClientUpdateDto body){
 		try {
 			Client client = mapper.map(body, Client.class);
 			client.setId(id);
@@ -85,7 +82,7 @@ public class ClientController {
 	}
 	
 	@PostMapping("clients")
-	private ResponseEntity<?> createClient(@RequestBody ClientCreationDTO body){
+	private ResponseEntity<?> createClient(@RequestBody ClientCreationDto body){
 		try {
 			Client client = mapper.map(body, Client.class);
 			client.getSystemRole().setId(body.getSystemRoleId());;

@@ -7,13 +7,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.user_alergies_app.dto.MedicineIdsDto;
-import com.example.user_alergies_app.dto.MedicineDto;
+import com.example.pharmacy.dto.MedicineDto;
+import com.example.pharmacy.dto.MedicineIdsDto;
 import com.example.user_alergies_app.dto.UserAlergiesDto;
 import com.example.user_alergies_app.jdbc_repository.UserAlergiesJdbcRepository;
 import com.example.user_alergies_app.model.UserAlergies;
 import com.example.user_alergies_app.util.MedicineService;
-import com.example.user_alergies_app.util.MedicineServiceImpl;
 
 @Service
 public class UserAlergiesServiceImpl implements UserAlergiesService{

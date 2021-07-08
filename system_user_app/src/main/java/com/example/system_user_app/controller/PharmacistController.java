@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.system_user_app.dto.PharmacistCreationDTO;
-import com.example.system_user_app.dto.PharmacistDTO;
-import com.example.system_user_app.dto.PharmacistUpdateDTO;
+import com.example.pharmacy.dto.PharmacistCreationDto;
+import com.example.pharmacy.dto.PharmacistDto;
+import com.example.pharmacy.dto.PharmacistUpdateDto;
 import com.example.system_user_app.exceptions.InvalidIdException;
 import com.example.system_user_app.jdbc_repository.PharmacistJdbcRepository;
 import com.example.system_user_app.model.Pharmacist;
@@ -41,11 +41,11 @@ public class PharmacistController {
 	private ResponseEntity<?> getAllPharmacists(@RequestParam(required = false) String username){
 		try {
 			Collection<Pharmacist> pharmacists = this.pharmacistService.getPharmacists(username);
-			Collection<PharmacistDTO> collection = new ArrayList<PharmacistDTO>();
+			Collection<PharmacistDto> collection = new ArrayList<PharmacistDto>();
 			for(Pharmacist pharmacist: pharmacists) {
-				collection.add(mapper.map(pharmacist, PharmacistDTO.class));
+				collection.add(mapper.map(pharmacist, PharmacistDto.class));
 			}
-			return new ResponseEntity<Collection<PharmacistDTO>>(collection, HttpStatus.OK);
+			return new ResponseEntity<Collection<PharmacistDto>>(collection, HttpStatus.OK);
 		} catch (Exception e) {
 			if(e.getClass().equals(InvalidIdException.class)) {
 				return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -58,8 +58,8 @@ public class PharmacistController {
 	private ResponseEntity<?> getPharmacistById(@PathVariable Integer id){
 		try {
 			Pharmacist pharmacist = this.pharmacistService.getPharmacistById(id);
-			PharmacistDTO dto = mapper.map(pharmacist, PharmacistDTO.class);
-			return new ResponseEntity<PharmacistDTO>(dto, HttpStatus.OK);
+			PharmacistDto dto = mapper.map(pharmacist, PharmacistDto.class);
+			return new ResponseEntity<PharmacistDto>(dto, HttpStatus.OK);
 		} catch (Exception e) {
 			if(e.getClass().equals(InvalidIdException.class)) {
 				return  ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
@@ -70,7 +70,7 @@ public class PharmacistController {
 	
 	//TODO: wrong id for PUT, DELETE, POST
 	@PutMapping("pharmacists/{id}")
-	private ResponseEntity<?> updatePharmacist(@PathVariable Integer id, @RequestBody PharmacistUpdateDTO body){
+	private ResponseEntity<?> updatePharmacist(@PathVariable Integer id, @RequestBody PharmacistUpdateDto body){
 		try {
 			Pharmacist pharmacist = mapper.map(body, Pharmacist.class);
 			pharmacist.setId(id);
@@ -83,7 +83,7 @@ public class PharmacistController {
 	}
 	
 	@PostMapping("pharmacists")
-	private ResponseEntity<?> createPharmacist(@RequestBody PharmacistCreationDTO body){
+	private ResponseEntity<?> createPharmacist(@RequestBody PharmacistCreationDto body){
 		try {
 			Pharmacist pharmacist = mapper.map(body, Pharmacist.class);
 			pharmacist.getSystemRole().setId(body.getSystemRoleId());;

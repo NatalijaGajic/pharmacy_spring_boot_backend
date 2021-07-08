@@ -11,9 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.reservation_app.dto.MedicineDto;
+import com.example.pharmacy.dto.ReservationMedicineDto;
 import com.example.reservation_app.dto.ReservationMedicineCreationDto;
-import com.example.reservation_app.dto.ReservationMedicineDto;
 
 @Service
 public class ReservationMedicineServiceImpl implements ReservationMedicineService{

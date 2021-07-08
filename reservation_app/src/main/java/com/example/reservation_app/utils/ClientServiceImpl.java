@@ -9,24 +9,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import com.example.reservation_app.dto.ClientDTO;
-import com.example.reservation_app.dto.ReservationMedicineDto;
+import com.example.pharmacy.dto.ClientDto;
 
 @Service
 public class ClientServiceImpl implements ClientService{
 
 	@Override
-	public ClientDTO getClientById(Integer id) {
+	public ClientDto getClientById(Integer id) {
 		RestTemplate restTemplate = new RestTemplate();
 		String uri = "http://localhost:8020/clients/"+id.toString();
-		ResponseEntity<ClientDTO> responseEntity = restTemplate.exchange(uri,
+		ResponseEntity<ClientDto> responseEntity = restTemplate.exchange(uri,
 		        HttpMethod.GET,
 		        null,
-		        ClientDTO.class
+		        ClientDto.class
 		      );
  		if(responseEntity.getStatusCode() == HttpStatus.OK) {
- 			ClientDTO client = responseEntity.getBody();
+ 			ClientDto client = responseEntity.getBody();
 			return client;
 		}else {
 			return null;

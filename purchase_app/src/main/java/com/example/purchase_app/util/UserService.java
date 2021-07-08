@@ -1,9 +1,10 @@
 package com.example.purchase_app.util;
 import java.util.Collection;
 import org.springframework.stereotype.Service;
-import com.example.purchase_app.dto.PharmacistDTO;
+
+import com.example.pharmacy.dto.PharmacistDto;
 
 @Service
 public interface UserService {
-	public PharmacistDTO getPharmacistsById(Integer id);
+	public PharmacistDto getPharmacistsById(Integer id);
 }

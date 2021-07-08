@@ -3,13 +3,13 @@ package com.example.purchase_app.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.purchase_app.dto.PharmacistDTO;
+
+import com.example.pharmacy.dto.PharmacistDto;
+import com.example.pharmacy.dto.ReservationDto;
 import com.example.purchase_app.dto.PurchaseDTO;
-import com.example.purchase_app.dto.ReservationDTO;
 import com.example.purchase_app.jdbc_repository.PurchaseJdbcRepository;
 import com.example.purchase_app.model.Purchase;
 import com.example.purchase_app.util.ReservationService;
@@ -40,8 +40,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 		for(Purchase purchase: purchases) {
 			Integer pharmacistId = purchase.getPharmacistId();
 			Integer reservationId = purchase.getReservationId();
-			PharmacistDTO pharmacist = this.userService.getPharmacistsById(pharmacistId);
-			ReservationDTO reservation = this.reservationService.getReservationById(reservationId);
+			PharmacistDto pharmacist = this.userService.getPharmacistsById(pharmacistId);
+			ReservationDto reservation = this.reservationService.getReservationById(reservationId);
 			
 			PurchaseDTO purchaseDTO = new PurchaseDTO();
 			purchaseDTO.setId(purchase.getId());
@@ -61,8 +61,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 		PurchaseDTO purchaseDTO = new PurchaseDTO();
 		Integer pharmacistId = purchase.getPharmacistId();
 		Integer reservationId = purchase.getReservationId();
-		PharmacistDTO pharmacist = this.userService.getPharmacistsById(pharmacistId);
-		ReservationDTO reservation = this.reservationService.getReservationById(reservationId);
+		PharmacistDto pharmacist = this.userService.getPharmacistsById(pharmacistId);
+		ReservationDto reservation = this.reservationService.getReservationById(reservationId);
 		
 		purchaseDTO.setId(purchase.getId());
 		purchaseDTO.setDateOfPurchase(purchase.getDateOfPurchase());
@@ -78,8 +78,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 		PurchaseDTO purchaseDTO = new PurchaseDTO();
 		Integer pharmacistId = purchase.getPharmacistId();
 		Integer reservationId = purchase.getReservationId();
-		PharmacistDTO pharmacist = this.userService.getPharmacistsById(pharmacistId);
-		ReservationDTO reservation = this.reservationService.getReservationById(reservationId);
+		PharmacistDto pharmacist = this.userService.getPharmacistsById(pharmacistId);
+		ReservationDto reservation = this.reservationService.getReservationById(reservationId);
 		
 		purchaseDTO.setId(purchase.getId());
 		purchaseDTO.setDateOfPurchase(purchase.getDateOfPurchase());
